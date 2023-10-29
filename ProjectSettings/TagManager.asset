@@ -10,6 +10,7 @@ TagManager:
   - SamplesInfoPanel
   - Lamen
   - greenonion
+  - Pot
   layers:
   - Default
   - TransparentFX
