@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PotInteraction : MonoBehaviour
 {
-    private bool isPotOnInduction = false; // 냄비가 인덕션 위에 올려져 있는지 여부를 나타내는 플래그
+    public bool isPotOnInduction = false; // 냄비가 인덕션 위에 올려져 있는지 여부를 나타내는 플래그
 
     private void OnTriggerEnter(Collider other)
     {
