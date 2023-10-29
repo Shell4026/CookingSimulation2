@@ -12,8 +12,14 @@ public class Cutable : MonoBehaviour
     public SkinnedMeshRenderer skinned_renderer;
     [Header("콜라이더")]
     public BoxCollider _collider;
+    [Header("자르기 위한 최소 속도")]
+    public float min_speed = 1.0f;
+    [Header("최대 자를 수 있는 수")]
+    public int max_count = 5;
 
     Mesh mesh;
+    bool cut_wait = false;
+    int count = 0;
 
     [HideInInspector][SerializeField] public GameObject cut_obj;
     void Start()
@@ -30,6 +36,38 @@ public class Cutable : MonoBehaviour
         
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (count >= max_count)
+            return;
+        if (cut_wait == true)
+            return;
+        if(collision.collider.CompareTag("knife"))
+        {
+            Knife knife = collision.gameObject.GetComponent<Knife>();
+            if (knife == null)
+                return;
+
+            //Debug.Log(Mathf.Sqrt(knife.GetSqrSpeed()));
+            if (knife.GetSqrSpeed() < min_speed * min_speed)
+                return;
+            Cut(knife.center.position, knife.GetKnifeNormal());
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (cut_wait == false)
+            return;
+        if (collision.collider.CompareTag("knife"))
+        {
+            cut_wait = false;
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pos">칼의 중심 좌표(월드)</param>
+    /// <param name="normal">칼의 절단면 벡터(월드)</param>
     public void Cut(Vector3 pos, Vector3 normal)
     {
         Transform trans;
@@ -65,6 +103,10 @@ public class Cutable : MonoBehaviour
         Vector3[] normals = mesh.normals;
         Vector2[] uvs = mesh.uv;
         BoneWeight[] weights = mesh.boneWeights;
+
+        if (verts.Length == 0)
+            return;
+
         int[] tris = mesh.triangles;
         for (int i = 0; i < tris.Length; i += 3)
         {
@@ -430,12 +472,11 @@ public class Cutable : MonoBehaviour
             tris_b.Add(tris_b.Count);
         }
         //----------------------------------------------------------------------------------//
-        //Debug.Log(verts_a.Count);
-        //Debug.Log(weights_a.Count);
-
-        //Debug.Log(verts_b.Count);
-        //Debug.Log(weights_b.Count);
         //-----------------메쉬A-------------------//
+        Cutable obj_a = Instantiate(gameObject).GetComponent<Cutable>();
+        obj_a.cut_wait = true;
+        obj_a.count += 1;
+
         Vector3[] final_verts = verts_a.ToArray();
         Mesh new_mesh_a = new()
         {
@@ -446,14 +487,14 @@ public class Cutable : MonoBehaviour
             subMeshCount = mesh.subMeshCount,
             triangles = tris_a.ToArray()
         };
-        if (skinned_renderer != null)
+        if (obj_a.skinned_renderer != null)
         {
             new_mesh_a.boneWeights = weights_a.ToArray();
-            skinned_renderer.sharedMesh = new_mesh_a;
+            obj_a.skinned_renderer.sharedMesh = new_mesh_a;
         }
         if(meshFilter != null)
         {
-            meshFilter.mesh = new_mesh_a;
+            obj_a.meshFilter.mesh = new_mesh_a;
         }
         //콜라이더 수정//
         Vector3 max = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
@@ -475,12 +516,14 @@ public class Cutable : MonoBehaviour
                 min.z = final_verts[i].z;
         }
         Vector3 center = (max + min) / 2.0f;
-        _collider.center = center;
-        _collider.size = new Vector3(max.x - min.x, max.y - min.y, max.z - min.z);
-        //_collider.bounds.SetMinMax(min ,max);
+        obj_a._collider.center = center;
+        obj_a._collider.size = new Vector3(max.x - min.x, max.y - min.y, max.z - min.z);
         //----------------------------------------//
         //-----------------메쉬B-------------------//
-        GameObject other = Instantiate(gameObject);
+        Cutable obj_b = Instantiate(gameObject).GetComponent<Cutable>();
+        obj_b.transform.Translate(new Vector3(0, 0.05f, 0), Space.World);
+        obj_b.cut_wait = true;
+        obj_b.count += 1;
 
         final_verts = verts_b.ToArray();
         Mesh new_mesh_b = new()
@@ -492,16 +535,39 @@ public class Cutable : MonoBehaviour
             subMeshCount = mesh.subMeshCount,
             triangles = tris_b.ToArray()
         };
-        if (skinned_renderer != null)
+        if (obj_b.skinned_renderer != null)
         {
             new_mesh_b.boneWeights = weights_b.ToArray();
-            other.GetComponent<Cutable>().skinned_renderer.sharedMesh = new_mesh_b;
+            obj_b.GetComponent<Cutable>().skinned_renderer.sharedMesh = new_mesh_b;
         }
         if (meshFilter != null)
         {
-            other.GetComponent<Cutable>().meshFilter.mesh = new_mesh_b;
+            obj_b.GetComponent<Cutable>().meshFilter.mesh = new_mesh_b;
         }
+        //콜라이더 수정//
+        max = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
+        min = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
+        for (int i = 1; i < final_verts.Length; i++)
+        {
+            if (max.x < final_verts[i].x)
+                max.x = final_verts[i].x;
+            if (max.y < final_verts[i].y)
+                max.y = final_verts[i].y;
+            if (max.z < final_verts[i].z)
+                max.z = final_verts[i].z;
+
+            if (min.x > final_verts[i].x)
+                min.x = final_verts[i].x;
+            if (min.y > final_verts[i].y)
+                min.y = final_verts[i].y;
+            if (min.z > final_verts[i].z)
+                min.z = final_verts[i].z;
+        }
+        center = (max + min) / 2.0f;
+        obj_b._collider.center = center;
+        obj_b._collider.size = new Vector3(max.x - min.x, max.y - min.y, max.z - min.z);
         //----------------------------------------//
+        Destroy(this);
     }
 }
 public class Vector3Comparer : IComparer<Vector3>

@@ -212,6 +212,7 @@ MonoBehaviour:
   meshFilter: {fileID: 0}
   skinned_renderer: {fileID: 5427188079945055239}
   _collider: {fileID: 5835435688385154377}
+  min_speed: 0.03
   cut_obj: {fileID: 0}
 --- !u!1 &6003765574561005658
 GameObject:
