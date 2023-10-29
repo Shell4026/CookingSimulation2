@@ -7,13 +7,21 @@ using System.Linq;
 //[RequireComponent(typeof(SkinnedMeshRenderer))]
 public class Cutable : MonoBehaviour
 {
+    [Header("둘 중 하나만 있으면 됨")]
+    public MeshFilter meshFilter;
     public SkinnedMeshRenderer skinned_renderer;
+    [Header("콜라이더")]
+    public BoxCollider _collider;
+
     Mesh mesh;
 
-    [SerializeField] public GameObject cut_obj;
+    [HideInInspector][SerializeField] public GameObject cut_obj;
     void Start()
     {
-        mesh = skinned_renderer.sharedMesh;
+        if(skinned_renderer != null)
+            mesh = skinned_renderer.sharedMesh;
+        if(meshFilter != null)
+            mesh = meshFilter.mesh;
     }
 
     // Update is called once per frame
@@ -24,8 +32,15 @@ public class Cutable : MonoBehaviour
 
     public void Cut(Vector3 pos, Vector3 normal)
     {
-        Vector3 local_pos = transform.InverseTransformPoint(pos);
-        Vector3 local_normal = transform.InverseTransformDirection(normal);
+        Transform trans;
+        if (meshFilter != null)
+            trans = meshFilter.transform;
+        else
+            trans = skinned_renderer.transform;
+
+        Vector3 local_pos = trans.InverseTransformPoint(pos);
+        //Debug.LogFormat("{0}, {1}, {2}", local_pos.x, local_pos.y, local_pos.z);
+        Vector3 local_normal = trans.InverseTransformDirection(normal);
 
         List<Vector3> verts_a = new();
         List<Vector3> normals_a = new();
@@ -79,15 +94,19 @@ public class Cutable : MonoBehaviour
                 uvs_a.Add(uvs[tris[i + 1]]);
                 uvs_a.Add(uvs[tris[i + 2]]);
 
-                weights_a.Add(weights[tris[i]]);
-                weights_a.Add(weights[tris[i + 1]]);
-                weights_a.Add(weights[tris[i + 2]]);
+                if (skinned_renderer != null)
+                {
+                    weights_a.Add(weights[tris[i]]);
+                    weights_a.Add(weights[tris[i + 1]]);
+                    weights_a.Add(weights[tris[i + 2]]);
+
+                }
 
                 tris_a.Add(tris_a.Count);
                 tris_a.Add(tris_a.Count);
                 tris_a.Add(tris_a.Count);
             }
-            else if(dot1 < 0 && dot2 < 0 && dot3 < 0) // 모든 점이 뒤
+            else if (dot1 < 0 && dot2 < 0 && dot3 < 0) // 모든 점이 뒤
             {
                 verts_b.Add(vertex1);
                 verts_b.Add(vertex2);
@@ -100,11 +119,12 @@ public class Cutable : MonoBehaviour
                 uvs_b.Add(uvs[tris[i]]);
                 uvs_b.Add(uvs[tris[i + 1]]);
                 uvs_b.Add(uvs[tris[i + 2]]);
-
-                weights_b.Add(weights[tris[i]]);
-                weights_b.Add(weights[tris[i + 1]]);
-                weights_b.Add(weights[tris[i + 2]]);
-
+                if (skinned_renderer != null)
+                {
+                    weights_b.Add(weights[tris[i]]);
+                    weights_b.Add(weights[tris[i + 1]]);
+                    weights_b.Add(weights[tris[i + 2]]);
+                }
                 tris_b.Add(tris_b.Count);
                 tris_b.Add(tris_b.Count);
                 tris_b.Add(tris_b.Count);
@@ -114,7 +134,7 @@ public class Cutable : MonoBehaviour
                 Vector3 alone, v2_tmp, v3_tmp;
                 Vector3 alone_nrm, v2_nrm, v3_nrm;
                 Vector3 alone_uv, v2_uv, v3_uv;
-                BoneWeight alone_weight, v2_weight, v3_weight;
+                BoneWeight alone_weight = new(), v2_weight = new(), v3_weight = new();
                 if (dot2 * dot3 >= 0) // dot1은 혼자 있음
                 {
                     alone = vertex1;
@@ -128,10 +148,12 @@ public class Cutable : MonoBehaviour
                     alone_uv = uvs[tris[i]];
                     v2_uv = uvs[tris[i + 1]];
                     v3_uv = uvs[tris[i + 2]];
-
-                    alone_weight = weights[tris[i]];
-                    v2_weight = weights[tris[i + 1]];
-                    v3_weight = weights[tris[i + 2]];
+                    if (skinned_renderer != null)
+                    {
+                        alone_weight = weights[tris[i]];
+                        v2_weight = weights[tris[i + 1]];
+                        v3_weight = weights[tris[i + 2]];
+                    }
                 }
                 else if (dot1 * dot3 >= 0) // dot2는 혼자 있음
                 {
@@ -146,10 +168,12 @@ public class Cutable : MonoBehaviour
                     alone_uv = uvs[tris[i + 1]];
                     v2_uv = uvs[tris[i + 2]];
                     v3_uv = uvs[tris[i]];
-
-                    alone_weight = weights[tris[i + 1]];
-                    v2_weight = weights[tris[i + 2]];
-                    v3_weight = weights[tris[i]];
+                    if (skinned_renderer != null)
+                    {
+                        alone_weight = weights[tris[i + 1]];
+                        v2_weight = weights[tris[i + 2]];
+                        v3_weight = weights[tris[i]];
+                    }
                 }
                 else if (dot1 * dot2 >= 0) // dot3은 혼자 있음
                 {
@@ -164,10 +188,12 @@ public class Cutable : MonoBehaviour
                     alone_uv = uvs[tris[i + 2]];
                     v2_uv = uvs[tris[i]];
                     v3_uv = uvs[tris[i + 1]];
-
-                    alone_weight = weights[tris[i + 2]];
-                    v2_weight = weights[tris[i]];
-                    v3_weight = weights[tris[i + 1]];
+                    if (skinned_renderer != null)
+                    {
+                        alone_weight = weights[tris[i + 2]];
+                        v2_weight = weights[tris[i]];
+                        v3_weight = weights[tris[i + 1]];
+                    }
                 }
                 else
                 {
@@ -204,31 +230,35 @@ public class Cutable : MonoBehaviour
 
                 cutting_surface_uv.Add(p1_uv);
                 cutting_surface_uv.Add(p2_uv);
-
-                BoneWeight p1_weight = new()
+                BoneWeight p1_weight = new();
+                BoneWeight p2_weight = new();
+                if (skinned_renderer != null)
                 {
-                    boneIndex0 = alone_weight.boneIndex0,
-                    boneIndex1 = v2_weight.boneIndex0,
-                    boneIndex2 = alone_weight.boneIndex1,
-                    boneIndex3 = v2_weight.boneIndex1,
-                    weight0 = Mathf.Lerp(alone_weight.weight0, v2_weight.weight0, p1_ratio),
-                    weight1 = Mathf.Lerp(alone_weight.weight1, v2_weight.weight1, p1_ratio),
-                    weight2 = Mathf.Lerp(alone_weight.weight2, v2_weight.weight2, p1_ratio),
-                    weight3 = Mathf.Lerp(alone_weight.weight3, v2_weight.weight3, p1_ratio),
-                };
-                BoneWeight p2_weight = new()
-                {
-                    boneIndex0 = alone_weight.boneIndex0,
-                    boneIndex1 = v3_weight.boneIndex0,
-                    boneIndex2 = alone_weight.boneIndex1,
-                    boneIndex3 = v3_weight.boneIndex1,
-                    weight0 = Mathf.Lerp(alone_weight.weight0, v3_weight.weight0, p2_ratio),
-                    weight1 = Mathf.Lerp(alone_weight.weight1, v3_weight.weight1, p2_ratio),
-                    weight2 = Mathf.Lerp(alone_weight.weight2, v3_weight.weight2, p2_ratio),
-                    weight3 = Mathf.Lerp(alone_weight.weight3, v3_weight.weight3, p2_ratio),
-                };
-                cutting_surface_weight.Add(p1_weight);
-                cutting_surface_weight.Add(p2_weight);
+                    p1_weight = new()
+                    {
+                        boneIndex0 = alone_weight.boneIndex0,
+                        boneIndex1 = v2_weight.boneIndex0,
+                        boneIndex2 = alone_weight.boneIndex1,
+                        boneIndex3 = v2_weight.boneIndex1,
+                        weight0 = Mathf.Lerp(alone_weight.weight0, v2_weight.weight0, p1_ratio),
+                        weight1 = Mathf.Lerp(alone_weight.weight1, v2_weight.weight1, p1_ratio),
+                        weight2 = Mathf.Lerp(alone_weight.weight2, v2_weight.weight2, p1_ratio),
+                        weight3 = Mathf.Lerp(alone_weight.weight3, v2_weight.weight3, p1_ratio),
+                    };
+                    p2_weight = new()
+                    {
+                        boneIndex0 = alone_weight.boneIndex0,
+                        boneIndex1 = v3_weight.boneIndex0,
+                        boneIndex2 = alone_weight.boneIndex1,
+                        boneIndex3 = v3_weight.boneIndex1,
+                        weight0 = Mathf.Lerp(alone_weight.weight0, v3_weight.weight0, p2_ratio),
+                        weight1 = Mathf.Lerp(alone_weight.weight1, v3_weight.weight1, p2_ratio),
+                        weight2 = Mathf.Lerp(alone_weight.weight2, v3_weight.weight2, p2_ratio),
+                        weight3 = Mathf.Lerp(alone_weight.weight3, v3_weight.weight3, p2_ratio),
+                    };
+                    cutting_surface_weight.Add(p1_weight);
+                    cutting_surface_weight.Add(p2_weight);
+                }
 
                 var verts_list1 = verts_a;
                 var normals_list1 = normals_a;
@@ -270,10 +300,12 @@ public class Cutable : MonoBehaviour
                 uvs_list2.Add(p1_uv);
                 uvs_list2.Add(p2_uv);
 
-                weights_list2.Add(alone_weight);
-                weights_list2.Add(p1_weight);
-                weights_list2.Add(p2_weight);
-
+                if (skinned_renderer != null)
+                {
+                    weights_list2.Add(alone_weight);
+                    weights_list2.Add(p1_weight);
+                    weights_list2.Add(p2_weight);
+                }
                 tris_list2.Add(tris_list2.Count);
                 tris_list2.Add(tris_list2.Count);
                 tris_list2.Add(tris_list2.Count);
@@ -311,11 +343,12 @@ public class Cutable : MonoBehaviour
                 uvs_list1.Add(p1_uv);
                 uvs_list1.Add(v3_uv);
                 uvs_list1.Add(p2_uv);
-
-                weights_list1.Add(p1_weight);
-                weights_list1.Add(v3_weight);
-                weights_list1.Add(p2_weight);
-
+                if (skinned_renderer != null)
+                {
+                    weights_list1.Add(p1_weight);
+                    weights_list1.Add(v3_weight);
+                    weights_list1.Add(p2_weight);
+                }
                 tris_list1.Add(tris_list1.Count);
                 tris_list1.Add(tris_list1.Count);
                 tris_list1.Add(tris_list1.Count);
@@ -365,11 +398,12 @@ public class Cutable : MonoBehaviour
             uvs_a.Add(cutting_surface_uv[i]);
             uvs_a.Add(cutting_surface_uv[i + 1]);
             uvs_a.Add(Vector2.Lerp(cutting_surface_uv[i], cutting_surface_uv[i + 1], 0.5f));
-
-            weights_a.Add(cutting_surface_weight[i]);
-            weights_a.Add(cutting_surface_weight[i + 1]);
-            weights_a.Add(cutting_surface_weight[i + 1]);
-
+            if (skinned_renderer != null)
+            {
+                weights_a.Add(cutting_surface_weight[i]);
+                weights_a.Add(cutting_surface_weight[i + 1]);
+                weights_a.Add(cutting_surface_weight[i + 1]);
+            }
             tris_a.Add(tris_a.Count);
             tris_a.Add(tris_a.Count);
             tris_a.Add(tris_a.Count);
@@ -385,46 +419,89 @@ public class Cutable : MonoBehaviour
             uvs_b.Add(Vector2.Lerp(cutting_surface_uv[i], cutting_surface_uv[i + 1], 0.5f));
             uvs_b.Add(cutting_surface_uv[i + 1]);
             uvs_b.Add(cutting_surface_uv[i]);
-
-            weights_b.Add(cutting_surface_weight[i + 1]);
-            weights_b.Add(cutting_surface_weight[i + 1]);
-            weights_b.Add(cutting_surface_weight[i]);
-
+            if (skinned_renderer != null)
+            {
+                weights_b.Add(cutting_surface_weight[i + 1]);
+                weights_b.Add(cutting_surface_weight[i + 1]);
+                weights_b.Add(cutting_surface_weight[i]);
+            }
             tris_b.Add(tris_b.Count);
             tris_b.Add(tris_b.Count);
             tris_b.Add(tris_b.Count);
         }
         //----------------------------------------------------------------------------------//
-        Debug.Log(verts_a.Count);
-        Debug.Log(weights_a.Count);
+        //Debug.Log(verts_a.Count);
+        //Debug.Log(weights_a.Count);
 
-        Debug.Log(verts_b.Count);
-        Debug.Log(weights_b.Count);
+        //Debug.Log(verts_b.Count);
+        //Debug.Log(weights_b.Count);
+        //-----------------메쉬A-------------------//
+        Vector3[] final_verts = verts_a.ToArray();
         Mesh new_mesh_a = new()
         {
-            vertices = verts_a.ToArray(),
+            vertices = final_verts,
             normals = normals_a.ToArray(),
             uv = uvs_a.ToArray(),
-            boneWeights = weights_a.ToArray(),
             bindposes = mesh.bindposes,
             subMeshCount = mesh.subMeshCount,
             triangles = tris_a.ToArray()
         };
-        skinned_renderer.sharedMesh = new_mesh_a;
+        if (skinned_renderer != null)
+        {
+            new_mesh_a.boneWeights = weights_a.ToArray();
+            skinned_renderer.sharedMesh = new_mesh_a;
+        }
+        if(meshFilter != null)
+        {
+            meshFilter.mesh = new_mesh_a;
+        }
+        //콜라이더 수정//
+        Vector3 max = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
+        Vector3 min = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
+        for(int i = 1; i < final_verts.Length; i++)
+        {
+            if (max.x < final_verts[i].x)
+                max.x = final_verts[i].x;
+            if (max.y < final_verts[i].y)
+                max.y = final_verts[i].y;
+            if (max.z < final_verts[i].z)
+                max.z = final_verts[i].z;
 
-
+            if (min.x > final_verts[i].x)
+                min.x = final_verts[i].x;
+            if (min.y > final_verts[i].y)
+                min.y = final_verts[i].y;
+            if (min.z > final_verts[i].z)
+                min.z = final_verts[i].z;
+        }
+        Vector3 center = (max + min) / 2.0f;
+        _collider.center = center;
+        _collider.size = new Vector3(max.x - min.x, max.y - min.y, max.z - min.z);
+        //_collider.bounds.SetMinMax(min ,max);
+        //----------------------------------------//
+        //-----------------메쉬B-------------------//
         GameObject other = Instantiate(gameObject);
+
+        final_verts = verts_b.ToArray();
         Mesh new_mesh_b = new()
         {
-            vertices = verts_b.ToArray(),
+            vertices = final_verts,
             normals = normals_b.ToArray(),
             uv = uvs_b.ToArray(),
-            boneWeights = weights_b.ToArray(),
             bindposes = mesh.bindposes,
             subMeshCount = mesh.subMeshCount,
             triangles = tris_b.ToArray()
         };
-        other.GetComponent<Cutable>().skinned_renderer.sharedMesh = new_mesh_b;
+        if (skinned_renderer != null)
+        {
+            new_mesh_b.boneWeights = weights_b.ToArray();
+            other.GetComponent<Cutable>().skinned_renderer.sharedMesh = new_mesh_b;
+        }
+        if (meshFilter != null)
+        {
+            other.GetComponent<Cutable>().meshFilter.mesh = new_mesh_b;
+        }
+        //----------------------------------------//
     }
 }
 public class Vector3Comparer : IComparer<Vector3>
