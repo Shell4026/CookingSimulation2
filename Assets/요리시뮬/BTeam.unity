@@ -5334,6 +5334,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Pot
       objectReference: {fileID: 0}
+    - target: {fileID: 6028487177925898031, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
+      propertyPath: m_Mass
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6028487177965797049, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
       propertyPath: m_TagString
       value: Pot
