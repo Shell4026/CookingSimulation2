@@ -52,6 +52,7 @@ public class Cutable : MonoBehaviour
             if (knife.GetSqrSpeed() < min_speed * min_speed)
                 return;
             Cut(knife.center.position, knife.GetKnifeNormal());
+            knife.audios.Play();
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -567,6 +568,7 @@ public class Cutable : MonoBehaviour
         obj_b._collider.center = center;
         obj_b._collider.size = new Vector3(max.x - min.x, max.y - min.y, max.z - min.z);
         //----------------------------------------//
+
         Destroy(this);
     }
 }

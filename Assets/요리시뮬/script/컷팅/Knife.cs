@@ -6,6 +6,7 @@ public class Knife : MonoBehaviour
 {
     public Transform center;
     public Transform normal;
+    public AudioSource audios;
 
     float speed = 0.0f;
     Vector3 before_center;
