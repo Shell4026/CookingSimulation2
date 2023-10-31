@@ -29,7 +29,9 @@ public class Cookingpreparation : MonoBehaviour
     [SerializeField] private Message sub_tutorial3; // 도마로 가라
     [SerializeField] private Message sub_tutorial4; // 냄비 물 받아
     [SerializeField] private Message sub_tutorial5; // 물 틀어
-
+    [SerializeField] private Message sub_tutorial6; // 물 꽉찼어 임마
+    [SerializeField] private Message sub_tutorial7; // 물 부족해 임마
+    [SerializeField] private Message sub_tutorial8; // 재료들을 넣자
     [Space(10.0f)]
     public float LimitTime;
     public float minTime;
@@ -41,6 +43,8 @@ public class Cookingpreparation : MonoBehaviour
     private bool table = false;
 
     int level = 0;
+
+    bool water_check = false;
 
     void Start()
     {
@@ -68,6 +72,9 @@ public class Cookingpreparation : MonoBehaviour
         sub_tutorial3.gameObject.SetActive(false);
         sub_tutorial4.gameObject.SetActive(false);
         sub_tutorial5.gameObject.SetActive(false);
+        sub_tutorial6.gameObject.SetActive(false);
+        sub_tutorial7.gameObject.SetActive(false);
+        sub_tutorial8.gameObject.SetActive(false);
     }
 
     public int GetLevel()
@@ -107,45 +114,32 @@ public class Cookingpreparation : MonoBehaviour
                 OffSubtitles();
                 sub_tutorial5.gameObject.SetActive(true);
                 break;
+            case 7: //물 꽉찼어 임마
+                OffSubtitles();
+                sub_tutorial6.gameObject.SetActive(true);
+                break;
+            case 8: //물 부족해 임마
+                OffSubtitles();
+                sub_tutorial7.gameObject.SetActive(true);
+                break;
+            case 9: //잘했고 재료 넣어 임마
+                OffSubtitles();
+                audio_good.Play();
+                sub_tutorial8.gameObject.SetActive(true);
+                break;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (inductionButton.IsPress() && potInteraction.isPotOnInduction)
+        if (!water_check)
         {
-            if (pot != true)
+            if (pot.GetWaterAmount() > 0.8f)
             {
-                //다시 UI 버튼으로 GameStateLoad1 스크립트 할당하기
-                sub_retry.gameObject.SetActive(true);
+                LevelStart(7);
+                water_check = true;
             }
-            else if (pot.GetWaterAmount() > 0.9f)
-            {
-                if (ingredients == true) //물을 넣고 재료를 넣었는가?
-                {
-                    LimitTime -= Time.deltaTime;
-                    Debug.Log(LimitTime); // 시간 UI
-                    if (LimitTime >= minTime && LimitTime <= maxTime && (potInteraction.isPotOnInduction == false || inductionButton.IsPress() == false) && finsh == false) 
-                    {
-                        finsh = true;
-                        sub_good.gameObject.SetActive(true);
-                        //완성 알아서 보글보글 한 후 완성
-                    }
-                    else if ((LimitTime > maxTime || LimitTime < minTime) && (potInteraction.isPotOnInduction == false || inductionButton.IsPress() == false))
-                    {
-                        //no 탔는지 덜익었는지 ui로 띄운 후 재시작 UI 버튼으로 GameStateLoad2 스크립트 할당하기
-                        LimitTime = 10f;
-                        sub_fire.gameObject.SetActive(true);
-                        sub_retry.gameObject.SetActive(true);
-                    }
-                }
-            }
-        }     
-
-        if (table == true)
-        {
-            sub_end.gameObject.SetActive(true);
         }
     }
 }
