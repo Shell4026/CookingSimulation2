@@ -7,21 +7,19 @@ public class ButtonInteraction : MonoBehaviour
 {
     [SerializeField]GameObject induction;
     [SerializeField]bool isButtonPressed = false;
-    [Header("얼마나 눌러야 하는지")]
-    [SerializeField]float press_limit = 0.2f;
+    [Header("눌리기 위한 최소 속력")]
+    [SerializeField]float min_speed = 0.3f;
 
-    [Space(10.0f)]
-    private Color originalColor;
-    private Renderer induction_renderer;
+    Animator anim;
 
-    Vector3 original_pos;
-    bool pressing = false;
+    Color originalColor;
+    Renderer induction_renderer;
 
     private void Start()
     {
         induction_renderer = induction.GetComponent<Renderer>();
         originalColor = induction_renderer.material.color;
-        original_pos = transform.position;
+        anim = GetComponent<Animator>();
     }
 
     public void PressButton()
@@ -30,30 +28,13 @@ public class ButtonInteraction : MonoBehaviour
 
         if (isButtonPressed)
         {
+            anim.SetBool("press", true);
             induction_renderer.material.color = Color.red;
         }
         else if (!isButtonPressed)
         {
+            anim.SetBool("press", false);
             induction_renderer.material.color = originalColor;
-        }
-    }
-    protected void FixedUpdate()
-    {
-        float dis = (transform.position - original_pos).sqrMagnitude;
-        if (pressing)
-        {
-            if(dis < 0.0001f)
-            {
-                pressing = false;
-            }
-        }
-        else
-        {
-            if (dis >= press_limit * press_limit)
-            {
-                PressButton();
-                pressing = true;
-            }
         }
     }
 
@@ -68,5 +49,9 @@ public class ButtonInteraction : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.rigidbody.velocity.magnitude > min_speed)
+        {
+            PressButton();
+        }
     }
 }
