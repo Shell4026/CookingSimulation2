@@ -7,11 +7,8 @@ public class Container : MonoBehaviour
 {
     Dictionary<GameObject, Transform> objs = new();
 
-    Rigidbody my_rig;
-
     void Start()
     {
-        my_rig = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -38,17 +35,12 @@ public class Container : MonoBehaviour
             return;
 
         OVRGrabbable grab = obj.GetComponentInParent<OVRGrabbable>();
-        if (grab == null)
-            obj.transform.parent = objs[obj];
-        else
+        if (grab.isGrabbed == true)
         {
-            if (grab.isGrabbed == true)
-            {
-                obj.transform.parent = grab.grabbedBy.transform;
-            }
-            else
-                obj.transform.parent = objs[obj];
+            obj.transform.parent = grab.grabbedBy.transform;
         }
+        else
+            obj.transform.parent = objs[obj];
 
         objs.Remove(obj);
 
@@ -59,24 +51,28 @@ public class Container : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        var grab = collision.gameObject.GetComponentInParent<OVRGrabbable>();
+        if (grab == null || collision.gameObject.CompareTag("knife"))
+            return;
         Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
         if (rb == null)
             return;
-        Vector3 normal = collision.GetContact(0).normal;
-        float dot = Vector3.Dot(normal, Vector3.down);
-        if (dot > 0.966)
+        if (rb.velocity.sqrMagnitude < 0.1f)
         {
-            AddObject(collision.gameObject);
+            Vector3 normal = collision.GetContact(0).normal;
+            float dot = Vector3.Dot(normal, Vector3.down);
+            if (dot > 0.966)
+            {
+                AddObject(collision.gameObject);
+            }
         }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-
     }
 
     private void OnCollisionExit(Collision collision)
     {
+        var grab = collision.gameObject.GetComponentInParent<OVRGrabbable>();
+        if (grab == null)
+            return;
         RemoveObject(collision.gameObject);
     }
 }
