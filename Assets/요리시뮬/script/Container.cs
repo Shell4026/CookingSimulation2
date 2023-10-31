@@ -7,11 +7,11 @@ public class Container : MonoBehaviour
 {
     Dictionary<GameObject, Transform> objs = new();
 
-    Rigidbody rigidbody;
+    Rigidbody my_rig;
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        my_rig = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -20,41 +20,63 @@ public class Container : MonoBehaviour
         
     }
 
+    public void AddObject(GameObject obj)
+    {
+        if (!objs.ContainsKey(obj))
+        {
+            objs.Add(obj, transform.parent);
+            obj.transform.parent = transform;
+        }
+        var cutable = obj.GetComponentInParent<Cutable>();
+        if (cutable != null)
+            cutable.SetContainer(this);
+    }
+
+    public void RemoveObject(GameObject obj)
+    {
+        if (!objs.ContainsKey(obj))
+            return;
+
+        OVRGrabbable grab = obj.GetComponentInParent<OVRGrabbable>();
+        if (grab == null)
+            obj.transform.parent = objs[obj];
+        else
+        {
+            if (grab.isGrabbed == true)
+            {
+                obj.transform.parent = grab.grabbedBy.transform;
+            }
+            else
+                obj.transform.parent = objs[obj];
+        }
+
+        objs.Remove(obj);
+
+        var cutable = obj.GetComponentInParent<Cutable>();
+        if (cutable != null)
+            cutable.SetContainer(null);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("knife"))
+        Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+        if (rb == null)
+            return;
+        Vector3 normal = collision.GetContact(0).normal;
+        float dot = Vector3.Dot(normal, Vector3.down);
+        if (dot > 0.966)
         {
-            if(rigidbody.velocity.sqrMagnitude < 0.1)
-                rigidbody.isKinematic = true;
+            AddObject(collision.gameObject);
         }
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        Rigidbody rigid = collision.gameObject.GetComponent<Rigidbody>();
-        if(rigid != null)
-        {
-            if(rigid.velocity.sqrMagnitude < 0.1f)
-            {
-                if(!objs.ContainsKey(collision.gameObject))
-                {
-                    objs.Add(collision.gameObject, collision.transform.parent);
-                    collision.transform.parent = transform;
-                }
-            }
-        }
+
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("knife"))
-            rigidbody.isKinematic = false;
-
-        if (!objs.ContainsKey(collision.gameObject))
-            return;
-        
-        collision.transform.parent = objs[collision.gameObject];
-        Debug.Log(collision.gameObject.name);
-        objs.Remove(collision.gameObject);
+        RemoveObject(collision.gameObject);
     }
 }
