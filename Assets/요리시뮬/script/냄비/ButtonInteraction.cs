@@ -5,45 +5,68 @@ using OculusSampleFramework;
 
 public class ButtonInteraction : MonoBehaviour
 {
-    public GameObject targetObject;
-    public Transform buttonPressedPosition;
-    public bool isButtonPressed = false;
+    [SerializeField]GameObject induction;
+    [SerializeField]bool isButtonPressed = false;
+    [Header("얼마나 눌러야 하는지")]
+    [SerializeField]float press_limit = 0.2f;
 
-    private Vector3 originalPosition;
+    [Space(10.0f)]
     private Color originalColor;
-    private Renderer targetRenderer;
+    private Renderer induction_renderer;
+
+    Vector3 original_pos;
+    bool pressing = false;
 
     private void Start()
     {
-        targetRenderer = targetObject.GetComponent<Renderer>();
-        originalColor = targetRenderer.material.color;
-        originalPosition = transform.position;
+        induction_renderer = induction.GetComponent<Renderer>();
+        originalColor = induction_renderer.material.color;
+        original_pos = transform.position;
     }
 
-    private void PressButton()
+    public void PressButton()
     {
         isButtonPressed = !isButtonPressed;
 
         if (isButtonPressed)
         {
-            targetRenderer.material.color = Color.red;
-            transform.position = buttonPressedPosition.position;
+            induction_renderer.material.color = Color.red;
         }
         else if (!isButtonPressed)
         {
-            targetRenderer.material.color = originalColor;
-            transform.position = originalPosition;
+            induction_renderer.material.color = originalColor;
         }
-
     }
-    private void OnTriggerStay(Collider other)
+    protected void FixedUpdate()
     {
-        if (other.gameObject.layer == 7) // 손 레이어
+        float dis = (transform.position - original_pos).sqrMagnitude;
+        if (pressing)
         {
-            if (OVRInput.GetDown(OVRInput.Button.One))
+            if(dis < 0.0001f)
             {
-                PressButton();
+                pressing = false;
             }
         }
+        else
+        {
+            if (dis >= press_limit * press_limit)
+            {
+                PressButton();
+                pressing = true;
+            }
+        }
+    }
+
+    public void SetPress(bool p)
+    {
+        isButtonPressed = p;
+    }
+    public bool IsPress()
+    {
+        return isButtonPressed;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
     }
 }
