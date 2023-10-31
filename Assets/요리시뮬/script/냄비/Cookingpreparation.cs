@@ -11,7 +11,6 @@ public class Cookingpreparation : MonoBehaviour
     [Header("자막")]
     [SerializeField] private Message sub_start;
     [SerializeField] private Message sub_materials;
-    [SerializeField] private Message sub_tutorial1;
     [SerializeField] private Message sub_fire;
     [SerializeField] private Message sub_end;
     [SerializeField] private Message sub_retry;
@@ -23,6 +22,9 @@ public class Cookingpreparation : MonoBehaviour
     [SerializeField] private AudioSource audio_end;
     [SerializeField] private AudioSource audio_retry;
     [SerializeField] private AudioSource audio_good;
+    [Header("튜토리얼 자막")]
+    [SerializeField] private Message sub_tutorial1; // 무빙
+    [SerializeField] private Message sub_tutorial2; // 잡기
 
     [Space(10.0f)]
     public float LimitTime;
@@ -67,6 +69,12 @@ public class Cookingpreparation : MonoBehaviour
             case 2:
                 sub_materials.gameObject.SetActive(true);
                 audio_materials.Play();
+                StartCoroutine(LevelStartDelay(3, 3.0f));
+                break;
+            case 3:
+                sub_tutorial2.gameObject.SetActive(true);
+                break;
+            case 4:
                 break;
         }
     }
