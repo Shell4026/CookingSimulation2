@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Message : FollowingUI
 {
@@ -11,6 +12,7 @@ public class Message : FollowingUI
     [Header("·»´õ·¯")]
     public MeshRenderer render;
     public Text text;
+    public TextMeshProUGUI textpro;
 
     float time = 0.0f;
     bool start_fade = false;
@@ -41,6 +43,8 @@ public class Message : FollowingUI
             c = render.material.color;
         if (text != null)
             c = text.color;
+        if (textpro != null)
+            c = textpro.color;
 
         for (float f = 1f; f >= 0; f -= 0.01f)
         {
