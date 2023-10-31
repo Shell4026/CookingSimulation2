@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class Cookingpreparation : MonoBehaviour
 {
+    public Pot pot;
+    public PotInteraction potInteraction;
+    public ButtonInteraction inductionButton;
 
-    private ButtonInteraction inductionButton;
-    public PotInteraction pot;
-    public Water water;
+    [Header("자막")]
+    [SerializeField] private Message sub_start;
+    [SerializeField] private Message sub_materials;
+    [SerializeField] private Message sub_fire;
+    [SerializeField] private Message sub_end;
+    [SerializeField] private Message sub_retry;
+    [SerializeField] private Message sub_good;
+    [Header("음성")]
+    [SerializeField] private AudioSource audio_start;
+    [SerializeField] private AudioSource audio_materials;
+    [SerializeField] private AudioSource audio_fire;
+    [SerializeField] private AudioSource audio_end;
+    [SerializeField] private AudioSource audio_retry;
+    [SerializeField] private AudioSource audio_good;
 
-    public GameObject fire;
-    public GameObject end;
-    public GameObject retry;
-    public GameObject good;
-
+    [Space(10.0f)]
     public float LimitTime;
     public float minTime;
     public float maxTime;
@@ -25,37 +35,65 @@ public class Cookingpreparation : MonoBehaviour
 
     void Start()
     {
-        inductionButton = GameObject.Find("inductionButton").GetComponent<ButtonInteraction>();
+        Invoke(nameof(GameStart), 1.0f); //1초뒤 첫 시작
+    }
+
+    public void GameStart()
+    {
+        sub_start.gameObject.SetActive(true);
+        audio_start.Play();
+
+        StartCoroutine(LevelStartDelay(1, 5.0f));
+    }
+
+    IEnumerator LevelStartDelay(int lv, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        LevelStart(lv);
+    }
+
+    private void LevelStart(int lv)
+    {
+        switch(lv)
+        {
+            case 0:
+                GameStart();
+                break;
+            case 1:
+                sub_materials.gameObject.SetActive(true);
+                audio_materials.Play();
+                break;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (inductionButton.isButtonPressed && pot.isPotOnInduction)
+        if (inductionButton.isButtonPressed && potInteraction.isPotOnInduction)
         {
-            if (water.water != true)
+            if (pot != true)
             {
                 //다시 UI 버튼으로 GameStateLoad1 스크립트 할당하기
-                retry.SetActive(true);
+                sub_retry.gameObject.SetActive(true);
             }
-            else if (water.water == true)
+            else if (pot.GetWaterAmount() > 0.9f)
             {
                 if (ingredients == true) //물을 넣고 재료를 넣었는가?
                 {
                     LimitTime -= Time.deltaTime;
                     Debug.Log(LimitTime); // 시간 UI
-                    if (LimitTime >= minTime && LimitTime <= maxTime && (pot.isPotOnInduction == false || inductionButton.isButtonPressed == false) && finsh == false) 
+                    if (LimitTime >= minTime && LimitTime <= maxTime && (potInteraction.isPotOnInduction == false || inductionButton.isButtonPressed == false) && finsh == false) 
                     {
                         finsh = true;
-                        good.SetActive(true);
+                        sub_good.gameObject.SetActive(true);
                         //완성 알아서 보글보글 한 후 완성
                     }
-                    else if ((LimitTime > maxTime || LimitTime < minTime) && (pot.isPotOnInduction == false || inductionButton.isButtonPressed == false))
+                    else if ((LimitTime > maxTime || LimitTime < minTime) && (potInteraction.isPotOnInduction == false || inductionButton.isButtonPressed == false))
                     {
                         //no 탔는지 덜익었는지 ui로 띄운 후 재시작 UI 버튼으로 GameStateLoad2 스크립트 할당하기
                         LimitTime = 10f;
-                        fire.SetActive(true);
-                        retry.SetActive(true);
+                        sub_fire.gameObject.SetActive(true);
+                        sub_retry.gameObject.SetActive(true);
                     }
                 }
             }
@@ -63,8 +101,7 @@ public class Cookingpreparation : MonoBehaviour
 
         if (table == true)
         {
-            Debug.Log("성공"); // 성공 UI 띄우는 곳
-            end.SetActive(true);
+            sub_end.gameObject.SetActive(true);
         }
     }
 

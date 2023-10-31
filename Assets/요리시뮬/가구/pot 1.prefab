@@ -10176,8 +10176,8 @@ GameObject:
   - component: {fileID: 6028487177935379019}
   - component: {fileID: 6028487177925898031}
   - component: {fileID: 8015818993368455138}
-  - component: {fileID: 8015818994043741878}
   - component: {fileID: 4372319233174068037}
+  - component: {fileID: 8015818994043741880}
   m_Layer: 0
   m_Name: pot 1
   m_TagString: Pot
@@ -10257,29 +10257,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   water_amount: 1
---- !u!114 &8015818994043741878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6028487177925863817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae4031c1f57695a40a0313546b616ceb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pot: {fileID: 0}
-  water: {fileID: 382197359}
-  fire: {fileID: 1744263360}
-  end: {fileID: 0}
-  retry: {fileID: 0}
-  good: {fileID: 0}
-  LimitTime: 10
-  minTime: 4
-  maxTime: 6
-  ftime: 5
-  ingredients: 1
 --- !u!114 &4372319233174068037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10298,6 +10275,18 @@ MonoBehaviour:
   m_snapOffset: {fileID: 0}
   m_grabPoints:
   - {fileID: 6028487178015984267}
+--- !u!114 &8015818994043741880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6028487177925863817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160cb7246cecbec46b2efeab1b4fab84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6028487177925863819
 GameObject:
   m_ObjectHideFlags: 0
@@ -10655,7 +10644,7 @@ GameObject:
   - component: {fileID: 5087586066819161542}
   - component: {fileID: 7905304749698146254}
   m_Layer: 0
-  m_Name: water
+  m_Name: waterMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10742,7 +10731,6 @@ GameObject:
   - component: {fileID: 8015818992999042715}
   - component: {fileID: 8015818992999042717}
   - component: {fileID: 8015818992999042716}
-  - component: {fileID: 382197359}
   m_Layer: 0
   m_Name: water collider
   m_TagString: Untagged
@@ -10792,20 +10780,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   water_tag: water
   pot: {fileID: 8015818993368455138}
---- !u!114 &382197359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8015818992999042714}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c42ddfec8d73814e8683e2121ac7957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  watermin: {fileID: 0}
-  watermax: {fileID: 0}
-  pot: {fileID: 8015818993368455138}
-  water: 1
-  finsh: 0

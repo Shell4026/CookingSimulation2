@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class FillWater : MonoBehaviour
 {
+    [Header("물줄기 태그")]
     public string water_tag;
+    [Header("냄비")]
     public Pot pot;
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerStay(Collider other)
     {

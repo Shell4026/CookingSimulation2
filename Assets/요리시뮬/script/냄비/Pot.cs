@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pot : MonoBehaviour
 {
-    public float water_amount = 0.0f;
+    private float water_amount = 0.0f;
 
     Animator anim;
     void Start()
@@ -25,5 +25,18 @@ public class Pot : MonoBehaviour
             water_amount += 0.1f * Time.deltaTime;
             anim.SetFloat("water", water_amount);
         }
+    }
+
+    public void SetWaterAmount(float amount)
+    {
+        if (amount > 1.0f)
+            amount = 1.0f;
+        if (amount < 0.0f)
+            amount = 0.0f;
+        water_amount = amount;
+    }
+    public float GetWaterAmount()
+    {
+        return water_amount;
     }
 }
