@@ -136,9 +136,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3522751686888696649}
-  - component: {fileID: 2133834693608819482}
   - component: {fileID: 1388435374}
   - component: {fileID: 5328046877853986002}
+  - component: {fileID: 1889061557326927164}
   m_Layer: 0
   m_Name: "\uD30C"
   m_TagString: greenonion
@@ -163,24 +163,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2133834693608819482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4298830233246167539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02d61468f8b77ae4b92c344bc9a600fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_allowOffhandGrab: 1
-  m_snapPosition: 0
-  m_snapOrientation: 0
-  m_snapOffset: {fileID: 0}
-  m_grabPoints:
-  - {fileID: 5835435688385154377}
 --- !u!54 &1388435374
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -213,7 +195,26 @@ MonoBehaviour:
   skinned_renderer: {fileID: 5427188079945055239}
   _collider: {fileID: 5835435688385154377}
   min_speed: 0.03
+  max_count: 5
   cut_obj: {fileID: 0}
+--- !u!114 &1889061557326927164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4298830233246167539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a5c17db07136dc45944836e5bd2939b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_allowOffhandGrab: 1
+  m_snapPosition: 0
+  m_snapOrientation: 0
+  m_snapOffset: {fileID: 0}
+  m_grabPoints:
+  - {fileID: 5835435688385154377}
 --- !u!1 &6003765574561005658
 GameObject:
   m_ObjectHideFlags: 0
