@@ -31,16 +31,22 @@ public class Tutorial : MonoBehaviour
             if (manager.GetLevel() > 8)
             {
                 OVRGrabbable obj = hands[0].grabbedObject;
-                if(obj.gameObject.name.Contains("egg"))
+                if (obj != null)
                 {
-                    manager.LevelStart(10);
-                    first_grab_egg = false;
+                    if (obj.gameObject.name.Contains("egg"))
+                    {
+                        manager.LevelStart(10);
+                        first_grab_egg = false;
+                    }
                 }
                 obj = hands[1].grabbedObject;
-                if (obj.gameObject.name.Contains("egg"))
+                if (obj != null)
                 {
-                    manager.LevelStart(10);
-                    first_grab_egg = false;
+                    if (obj.gameObject.name.Contains("egg"))
+                    {
+                        manager.LevelStart(10);
+                        first_grab_egg = false;
+                    }
                 }
             }
         }

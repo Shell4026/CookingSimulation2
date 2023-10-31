@@ -21,6 +21,7 @@ public class Egg : MonoBehaviour
             {
                 if (white_egg_prefab == null)
                     return;
+                grab.grabbedBy.ForceRelease(grab);
                 GameObject obj = Instantiate(white_egg_prefab);
                 obj.transform.position = transform.position;
                 obj.transform.rotation = transform.rotation;

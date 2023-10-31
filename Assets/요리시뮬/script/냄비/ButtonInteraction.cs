@@ -5,15 +5,18 @@ using OculusSampleFramework;
 
 public class ButtonInteraction : MonoBehaviour
 {
-    [SerializeField]GameObject induction;
-    [SerializeField]bool isButtonPressed = false;
+    [SerializeField] Cookingpreparation manager;
+    [SerializeField] GameObject induction;
+    [SerializeField] bool isButtonPressed = false;
     [Header("눌리기 위한 최소 속력")]
-    [SerializeField]float min_speed = 0.3f;
+    [SerializeField] float min_speed = 0.3f;
 
     Animator anim;
 
     Color originalColor;
     Renderer induction_renderer;
+
+    bool first = true;
 
     private void Start()
     {
@@ -28,6 +31,11 @@ public class ButtonInteraction : MonoBehaviour
 
         if (isButtonPressed)
         {
+            if(first)
+            {
+                manager.LevelStart(12);
+                first = false;
+            }
             anim.SetBool("press", true);
             induction_renderer.material.color = Color.red;
         }

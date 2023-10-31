@@ -33,6 +33,8 @@ public class Cookingpreparation : MonoBehaviour
     [SerializeField] private Message sub_tutorial7; // 물 부족해 임마
     [SerializeField] private Message sub_tutorial8; // 재료들을 넣자
     [SerializeField] private Message sub_tutorial9; // 계란 팁
+    [SerializeField] private Message sub_tutorial10; // 재료를 다 넣은 후
+    [SerializeField] private Message sub_tutorial11; // 빨간 버튼 누름
     [Space(10.0f)]
     public float LimitTime;
     public float minTime;
@@ -76,6 +78,8 @@ public class Cookingpreparation : MonoBehaviour
         sub_tutorial6.gameObject.SetActive(false);
         sub_tutorial7.gameObject.SetActive(false);
         sub_tutorial8.gameObject.SetActive(false);
+        sub_tutorial9.gameObject.SetActive(false);
+        sub_tutorial10.gameObject.SetActive(false);
     }
 
     public int GetLevel()
@@ -131,6 +135,14 @@ public class Cookingpreparation : MonoBehaviour
             case 10: //계란 부수는 팁
                 OffSubtitles();
                 sub_tutorial9.gameObject.SetActive(true);
+                break;
+            case 11: //재료를 다 넣은 후
+                OffSubtitles();
+                sub_tutorial10.gameObject.SetActive(true);
+                break;
+            case 12: //빨간 버튼 누름
+                OffSubtitles();
+                sub_tutorial11.gameObject.SetActive(true);
                 break;
         }
     }
