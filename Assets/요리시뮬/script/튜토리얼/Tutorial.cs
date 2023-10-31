@@ -19,7 +19,7 @@ public class Tutorial : MonoBehaviour
     {
         if(first_grab)
         {
-            if (hands[0].grabbedObject != null || hands[0].grabbedObject != null)
+            if (hands[0].grabbedObject != null || hands[1].grabbedObject != null)
             {
                 manager.LevelStart(4);
                 first_grab = false;
