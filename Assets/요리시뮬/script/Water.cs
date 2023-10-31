@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Water : MonoBehaviour
 {
+    public GameObject watermin;
+    public GameObject watermax;
     public Pot pot;
     public bool water = false;
+    public bool finsh = false;
+
 
     private void Start()
     {
@@ -14,10 +18,15 @@ public class Water : MonoBehaviour
 
     private void Update()
     {
-        if (pot.water_amount > 0.9f)
+        if (pot.water_amount > 0.9f && finsh == true)
         {
-            Debug.Log("물이 가득찼습니다. 물을 잠그고 재료를 넣어주세요.");
+            watermax.SetActive(true);
             water = true;
+        }
+        else if(pot.water_amount < 0.9f && finsh == false)
+        {
+            watermin.SetActive(true);
+            finsh = true;
         }
     }
 }
