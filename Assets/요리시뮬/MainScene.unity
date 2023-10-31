@@ -10163,6 +10163,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1961139298}
     m_Modifications:
+    - target: {fileID: 1742414461097895578, guid: 80a5bc5f936072b4a86e2764cfa6bd75, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1742414461097895578, guid: 80a5bc5f936072b4a86e2764cfa6bd75, type: 3}
+      propertyPath: m_Interpolate
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1742414461097895581, guid: 80a5bc5f936072b4a86e2764cfa6bd75, type: 3}
       propertyPath: hand_pos
       value: 
@@ -11528,6 +11536,14 @@ PrefabInstance:
     - target: {fileID: 3035845205245761048, guid: b2c1626923f6f0b48b235277aaf8aa52, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035845205248866300, guid: b2c1626923f6f0b48b235277aaf8aa52, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3035845205248866300, guid: b2c1626923f6f0b48b235277aaf8aa52, type: 3}
+      propertyPath: m_Interpolate
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c1626923f6f0b48b235277aaf8aa52, type: 3}
