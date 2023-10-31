@@ -6,7 +6,6 @@ using UnityEngine;
 public class Container : MonoBehaviour
 {
     Dictionary<GameObject, Transform> objs = new();
-
     void Start()
     {
     }
@@ -40,7 +39,7 @@ public class Container : MonoBehaviour
             obj.transform.parent = grab.grabbedBy.transform;
         }
         else
-            obj.transform.parent = objs[obj];
+            obj.transform.parent = null;
 
         objs.Remove(obj);
 
@@ -49,19 +48,27 @@ public class Container : MonoBehaviour
             cutable.SetContainer(null);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         var grab = collision.gameObject.GetComponentInParent<OVRGrabbable>();
         if (grab == null || collision.gameObject.CompareTag("knife"))
             return;
+
+        if (grab.isGrabbed)
+        {
+            RemoveObject(collision.gameObject);
+            return;
+        }
+
         Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
         if (rb == null)
             return;
+
         if (rb.velocity.sqrMagnitude < 0.1f)
         {
             Vector3 normal = collision.GetContact(0).normal;
             float dot = Vector3.Dot(normal, Vector3.down);
-            if (dot > 0.966)
+            if (dot > 0.966f)
             {
                 AddObject(collision.gameObject);
             }
