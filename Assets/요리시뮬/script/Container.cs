@@ -2,19 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Container : MonoBehaviour
 {
     Dictionary<GameObject, Transform> objs = new();
 
+    Rigidbody rigidbody;
+
     void Start()
     {
-        
+        rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("knife"))
+        {
+            if(rigidbody.velocity.sqrMagnitude < 0.1)
+                rigidbody.isKinematic = true;
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -35,6 +47,9 @@ public class Container : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
+        if (collision.gameObject.CompareTag("knife"))
+            rigidbody.isKinematic = false;
+
         if (!objs.ContainsKey(collision.gameObject))
             return;
         
