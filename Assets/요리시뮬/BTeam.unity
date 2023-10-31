@@ -154,6 +154,11 @@ Transform:
   m_Father: {fileID: 2040658243}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1267145640 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6028487177925863817, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
+  m_PrefabInstance: {fileID: 8015818994043741872}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1604380421
 GameObject:
   m_ObjectHideFlags: 0
@@ -5099,7 +5104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 2328718301922309544}
   buttonPressedPosition: {fileID: 709371841}
-  isButtonPressed: 0
+  isButtonPressed: 1
 --- !u!64 &2040658248
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -5222,11 +5227,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2328718301922309544}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae4031c1f57695a40a0313546b616ceb, type: 3}
+  m_Script: {fileID: 11500000, guid: e1c9d1257fcb3bf4aa6d3f2737a7e127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fire: {fileID: 1744263360}
-  LimitTime: 10
+  isPotOnInduction: 0
 --- !u!1001 &8015818994043741872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5365,3 +5369,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6028487177925768617, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
   m_PrefabInstance: {fileID: 8015818994043741872}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8015818994043741878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1267145640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae4031c1f57695a40a0313546b616ceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fire: {fileID: 1744263360}
+  potObject: {fileID: 2328718301922309544}
+  LimitTime: 10
+  ftime: 5
