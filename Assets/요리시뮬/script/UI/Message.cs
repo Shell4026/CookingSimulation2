@@ -52,6 +52,13 @@ public class Message : FollowingUI
             {
                 time = 0.0f;
                 start_fade = false;
+                c.a = 1.0f;
+                if (render != null)
+                    render.material.color = c;
+                if (text != null)
+                    text.color = c;
+                if (textpro != null)
+                    textpro.color = c;
                 gameObject.SetActive(false);
                 yield return null;
             }
