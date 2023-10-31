@@ -63,7 +63,7 @@ public class Cookingpreparation : MonoBehaviour
         if (finsh == true) 
         {
             ftime -= Time.deltaTime;
-            Debug.Log(ftime);
+            //Debug.Log(ftime);
             if (ftime > 0 && inductionButton.isButtonPressed == false) // 제한시간 내에 했고 버튼이 꺼져있는 상태가 되면
             {
                 //라면 옮기기로 이동
