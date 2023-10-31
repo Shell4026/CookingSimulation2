@@ -123,6 +123,124 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &382197357 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8015818992999042714, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
+  m_PrefabInstance: {fileID: 8015818994043741872}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &382197359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382197357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c42ddfec8d73814e8683e2121ac7957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pot: {fileID: 8015818994043741879}
+  water: 1
+--- !u!1 &500712026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 500712027}
+  - component: {fileID: 500712029}
+  - component: {fileID: 500712030}
+  - component: {fileID: 500712032}
+  - component: {fileID: 500712031}
+  m_Layer: 0
+  m_Name: SavePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &500712027
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500712026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.319, y: 0.5, z: 1.945}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &500712029
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500712026}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &500712030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500712026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6a908d7be97854f8b685fc198473ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerpostion: {fileID: 0}
+  cookingpreparation: {fileID: 8015818994043741878}
+  water: {fileID: 382197359}
+  buttonInteraction: {fileID: 2040658247}
+  pot: {fileID: 8015818994043741879}
+--- !u!114 &500712031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500712026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a3170a85f7e2d4ca3f29d79cc0eeb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerpostion: {fileID: 0}
+  cookingpreparation: {fileID: 8015818994043741878}
+  water: {fileID: 382197359}
+  buttonInteraction: {fileID: 2040658247}
+  pot: {fileID: 8015818994043741879}
+--- !u!114 &500712032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500712026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 592f7fd48bd4e514dab342ac104a91ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerpostion: {fileID: 0}
+  cookingpreparation: {fileID: 8015818994043741878}
+  water: {fileID: 382197359}
+  buttonInteraction: {fileID: 2040658247}
+  pot: {fileID: 8015818994043741879}
 --- !u!1 &709371840
 GameObject:
   m_ObjectHideFlags: 0
@@ -5230,7 +5348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1c9d1257fcb3bf4aa6d3f2737a7e127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPotOnInduction: 0
+  isPotOnInduction: 1
 --- !u!1001 &8015818994043741872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5288,7 +5406,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6028487177925768617, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6028487177925768617, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5362,6 +5480,10 @@ PrefabInstance:
       propertyPath: m_BlendShapeWeights.Array.data[1]
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 8015818993368455138, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
+      propertyPath: water_amount
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
 --- !u!4 &8015818994043741873 stripped
@@ -5381,19 +5503,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4031c1f57695a40a0313546b616ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  water: {fileID: 382197359}
   fire: {fileID: 1744263360}
   potObject: {fileID: 2328718301922309544}
   LimitTime: 10
   ftime: 5
---- !u!114 &8015818994043741883
+  ingredients: 1
+--- !u!114 &8015818994043741879 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8015818993368455138, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
+  m_PrefabInstance: {fileID: 8015818994043741872}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1267145640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160cb7246cecbec46b2efeab1b4fab84, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c061b17b3d29374db85baf6a95d6116, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
