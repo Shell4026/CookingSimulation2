@@ -5,7 +5,7 @@ using UnityEngine;
 public class FollowingUI : MonoBehaviour
 {
     [Header("플레이어와의 거리")]
-    public float distance = 10.0f;
+    public float distance = 2.0f;
     [Header("플레이어 카메라")]
     public Transform player_cam;
     [Header("따라오는 속도")]
