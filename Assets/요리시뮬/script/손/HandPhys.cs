@@ -133,6 +133,8 @@ namespace OVRTouchSample
             {
                 rig.velocity = to / Time.fixedDeltaTime;
             }
+            if (rig.velocity.sqrMagnitude < 0.01f)
+                rig.velocity = Vector3.zero;
             Quaternion leftright;
             if (left)
                 leftright = Quaternion.Euler(0, 0, -90);
