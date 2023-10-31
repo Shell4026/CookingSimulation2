@@ -3038,7 +3038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handle: {fileID: 451241158}
-  grab: {fileID: 0}
+  grab: {fileID: 898153289}
 --- !u!54 &898153288
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3523,7 +3523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handle: {fileID: 152187515}
-  grab: {fileID: 0}
+  grab: {fileID: 1079910142}
 --- !u!54 &1079910137
 Rigidbody:
   m_ObjectHideFlags: 0
