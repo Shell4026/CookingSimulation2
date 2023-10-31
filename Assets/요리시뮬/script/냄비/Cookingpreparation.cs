@@ -7,6 +7,7 @@ public class Cookingpreparation : MonoBehaviour
     public Pot pot;
     public PotInteraction potInteraction;
     public ButtonInteraction inductionButton;
+    public GameStateLoad saveload;
 
     [Header("자막")]
     [SerializeField] private Message sub_start;
@@ -26,6 +27,8 @@ public class Cookingpreparation : MonoBehaviour
     [SerializeField] private Message sub_tutorial1; // 무빙
     [SerializeField] private Message sub_tutorial2; // 잡기
     [SerializeField] private Message sub_tutorial3; // 도마로 가라
+    [SerializeField] private Message sub_tutorial4; // 냄비 물 받아
+    [SerializeField] private Message sub_tutorial5; // 물 틀어
 
     [Space(10.0f)]
     public float LimitTime;
@@ -36,6 +39,8 @@ public class Cookingpreparation : MonoBehaviour
     public bool ingredients = false; //식재료
     private bool finsh = false;
     private bool table = false;
+
+    int level = 0;
 
     void Start()
     {
@@ -61,11 +66,19 @@ public class Cookingpreparation : MonoBehaviour
         sub_tutorial1.gameObject.SetActive(false);
         sub_tutorial2.gameObject.SetActive(false);
         sub_tutorial3.gameObject.SetActive(false);
+        sub_tutorial4.gameObject.SetActive(false);
+        sub_tutorial5.gameObject.SetActive(false);
+    }
+
+    public int GetLevel()
+    {
+        return level;
     }
 
     public void LevelStart(int lv)
     {
-        switch(lv)
+        level = lv;
+        switch (lv)
         {
             case 0:
                 GameStart();
@@ -86,13 +99,21 @@ public class Cookingpreparation : MonoBehaviour
                 OffSubtitles();
                 sub_tutorial3.gameObject.SetActive(true);
                 break;
+            case 5: //물 받아
+                OffSubtitles();
+                sub_tutorial4.gameObject.SetActive(true);
+                break;
+            case 6: //물 틀어
+                OffSubtitles();
+                sub_tutorial5.gameObject.SetActive(true);
+                break;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (inductionButton.isButtonPressed && potInteraction.isPotOnInduction)
+        if (inductionButton.IsPress() && potInteraction.isPotOnInduction)
         {
             if (pot != true)
             {
@@ -105,13 +126,13 @@ public class Cookingpreparation : MonoBehaviour
                 {
                     LimitTime -= Time.deltaTime;
                     Debug.Log(LimitTime); // 시간 UI
-                    if (LimitTime >= minTime && LimitTime <= maxTime && (potInteraction.isPotOnInduction == false || inductionButton.isButtonPressed == false) && finsh == false) 
+                    if (LimitTime >= minTime && LimitTime <= maxTime && (potInteraction.isPotOnInduction == false || inductionButton.IsPress() == false) && finsh == false) 
                     {
                         finsh = true;
                         sub_good.gameObject.SetActive(true);
                         //완성 알아서 보글보글 한 후 완성
                     }
-                    else if ((LimitTime > maxTime || LimitTime < minTime) && (potInteraction.isPotOnInduction == false || inductionButton.isButtonPressed == false))
+                    else if ((LimitTime > maxTime || LimitTime < minTime) && (potInteraction.isPotOnInduction == false || inductionButton.IsPress() == false))
                     {
                         //no 탔는지 덜익었는지 ui로 띄운 후 재시작 UI 버튼으로 GameStateLoad2 스크립트 할당하기
                         LimitTime = 10f;
@@ -125,27 +146,6 @@ public class Cookingpreparation : MonoBehaviour
         if (table == true)
         {
             sub_end.gameObject.SetActive(true);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("greenonion") && collision.gameObject.CompareTag("Lamen") && collision.gameObject.CompareTag("egg"))
-        {
-            ingredients = true;
-        }
-
-        if (collision.gameObject.CompareTag("Table")) 
-        {
-            table = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("greenonion") && collision.gameObject.CompareTag("Lamen") && collision.gameObject.CompareTag("egg"))
-        {
-            ingredients = false;
         }
     }
 }
