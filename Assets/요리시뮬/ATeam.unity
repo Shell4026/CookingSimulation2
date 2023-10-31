@@ -504,7 +504,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 0.3
+  MinDistance: 0.57
   MaxDistance: 2
   Pan2D: 0
   rolloffMode: 0
@@ -7061,6 +7061,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Knife
       objectReference: {fileID: 0}
+    - target: {fileID: 7920981256013740656, guid: 4b9d956a9750b7049b23ec74943d66fa, type: 3}
+      propertyPath: audios
+      value: 
+      objectReference: {fileID: 140553264}
     - target: {fileID: 9120537109397896036, guid: 4b9d956a9750b7049b23ec74943d66fa, type: 3}
       propertyPath: m_RootOrder
       value: 1
