@@ -16,11 +16,11 @@ public class LevelSetTrigger : MonoBehaviour
         if (!is_trigger)
             return;
 
-        if (require_level < 0)
-            return;
-
-        if (manager.GetLevel() != require_level)
-            return;
+        if (require_level > 0)
+        {
+            if (manager.GetLevel() != require_level)
+                return;
+        }
 
         if (target == null)
         {
@@ -51,11 +51,11 @@ public class LevelSetTrigger : MonoBehaviour
         if (is_trigger)
             return;
 
-        if (require_level < 0)
-            return;
-
-        if (manager.GetLevel() != require_level)
-            return;
+        if (require_level > 0)
+        {
+            if (manager.GetLevel() != require_level)
+                return;
+        }
 
         if (target == null)
         {
