@@ -16,10 +16,20 @@ public class PhysGrab : OVRGrabbable
     {
         base.GrabBegin(hand, grabPoint);
         gameObject.layer = 9; //Grab tag
+        var colliders = gameObject.GetComponentsInChildren<Collider>();
+        foreach(var collider in colliders)
+        {
+            collider.gameObject.layer = 9;
+        }
     }
     public override void GrabEnd(Vector3 linearVelocity, Vector3 angularVelocity)
     {
         base.GrabEnd(linearVelocity, angularVelocity);
         gameObject.layer = original_layer;
+        var colliders = gameObject.GetComponentsInChildren<Collider>();
+        foreach (var collider in colliders)
+        {
+            collider.gameObject.layer = original_layer;
+        }
     }
 }
