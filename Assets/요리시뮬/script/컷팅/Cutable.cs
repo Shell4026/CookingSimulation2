@@ -52,7 +52,9 @@ public class Cutable : MonoBehaviour
             if (knife.GetSqrSpeed() < min_speed * min_speed)
                 return;
             Cut(knife.center.position, knife.GetKnifeNormal());
-            knife.audios.Play();
+
+            if(knife.audios != null)
+                knife.audios.Play();
         }
     }
     private void OnCollisionExit(Collision collision)
