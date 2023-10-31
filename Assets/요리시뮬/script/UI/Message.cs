@@ -60,6 +60,8 @@ public class Message : FollowingUI
                 render.material.color = c;
             if(text != null)
                 text.color = c;
+            if (textpro != null)
+                textpro.color = c;
             yield return new WaitForSeconds(fade_time / 100.0f);
         }
     }
