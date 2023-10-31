@@ -32,6 +32,7 @@ public class Cookingpreparation : MonoBehaviour
     [SerializeField] private Message sub_tutorial6; // 물 꽉찼어 임마
     [SerializeField] private Message sub_tutorial7; // 물 부족해 임마
     [SerializeField] private Message sub_tutorial8; // 재료들을 넣자
+    [SerializeField] private Message sub_tutorial9; // 계란 팁
     [Space(10.0f)]
     public float LimitTime;
     public float minTime;
@@ -126,6 +127,10 @@ public class Cookingpreparation : MonoBehaviour
                 OffSubtitles();
                 audio_good.Play();
                 sub_tutorial8.gameObject.SetActive(true);
+                break;
+            case 10: //계란 부수는 팁
+                OffSubtitles();
+                sub_tutorial9.gameObject.SetActive(true);
                 break;
         }
     }

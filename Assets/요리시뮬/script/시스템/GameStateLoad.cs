@@ -40,6 +40,8 @@ public class GameStateLoad : MonoBehaviour
         objs_rot.Capacity = transforms.Length;
         foreach (var t in transforms)
         {
+            if (t == null)
+                continue;
             objs.Add(t);
             objs_pos.Add(t.position);
             objs_rot.Add(t.rotation);
@@ -71,6 +73,8 @@ public class GameStateLoad : MonoBehaviour
 
         for (int i = 0; i < objs.Count; ++i)
         {
+            if (objs[i] == null)
+                continue;
             var rb = objs[i].GetComponent<Rigidbody>();
             if(rb != null)
             {

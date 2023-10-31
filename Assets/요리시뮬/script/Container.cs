@@ -41,6 +41,11 @@ public class Container : MonoBehaviour
         else
             obj.transform.parent = null;
 
+        if(obj.layer == 9) //grab
+        {
+            obj.layer = 0;
+        }
+
         objs.Remove(obj);
 
         var cutable = obj.GetComponentInParent<Cutable>();

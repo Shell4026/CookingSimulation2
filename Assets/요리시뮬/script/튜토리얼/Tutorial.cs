@@ -8,6 +8,7 @@ public class Tutorial : MonoBehaviour
     public Cookingpreparation manager;
 
     bool first_grab = true;
+    bool first_grab_egg = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,23 @@ public class Tutorial : MonoBehaviour
                 first_grab = false;
             }
         }
-        
+        if (first_grab_egg)
+        {
+            if (manager.GetLevel() > 8)
+            {
+                OVRGrabbable obj = hands[0].grabbedObject;
+                if(obj.gameObject.name.Contains("egg"))
+                {
+                    manager.LevelStart(10);
+                    first_grab_egg = false;
+                }
+                obj = hands[1].grabbedObject;
+                if (obj.gameObject.name.Contains("egg"))
+                {
+                    manager.LevelStart(10);
+                    first_grab_egg = false;
+                }
+            }
+        }
     }
 }
