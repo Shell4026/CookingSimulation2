@@ -12,16 +12,17 @@ TagManager:
   - greenonion
   - Pot
   - Table
+  - egg
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - player
   - Water
   - UI
   - pp
-  - 
-  - 
+  - LeftHand
+  - RightHand
   - 
   - 
   - 
