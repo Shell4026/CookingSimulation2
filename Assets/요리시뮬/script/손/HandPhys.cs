@@ -50,6 +50,8 @@ namespace OVRTouchSample
 
         public Transform hand_pos;
         public bool left = false;
+        [Header("손 최대 거리")]
+        public float max_dis = 1.0f;
 
         [SerializeField]
         private OVRInput.Controller m_controller = OVRInput.Controller.None;
@@ -121,8 +123,16 @@ namespace OVRTouchSample
         {
             if (rig == null)
                 return;
-            rig.velocity = (hand_pos.position - transform.position) / Time.fixedDeltaTime;
 
+            Vector3 to = hand_pos.position - transform.position;
+            if (to.sqrMagnitude > max_dis * max_dis)
+            {
+                rig.position = hand_pos.position;
+            }
+            else
+            {
+                rig.velocity = to / Time.fixedDeltaTime;
+            }
             Quaternion leftright;
             if (left)
                 leftright = Quaternion.Euler(0, 0, -90);
