@@ -14,7 +14,11 @@ public class FollowHandle : MonoBehaviour
 
     void FixedUpdate()
     {
-        body.MovePosition(grabable_handle.position);
+        Vector3 to = grabable_handle.position - transform.position;
+        body.velocity = to * 10.0f / Time.fixedDeltaTime;
+        if (body.velocity.sqrMagnitude < 0.01f)
+            body.velocity = Vector3.zero;
+        //body.MovePosition(grabable_handle.position);
     }
 
 }
