@@ -5,12 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Container : MonoBehaviour
 {
+    OVRGrabbable m_grab;
+
     Dictionary<GameObject, Transform> objs = new();
     void Start()
     {
+        m_grab = GetComponent<OVRGrabbable>();
     }
 
     // Update is called once per frame
+    private void FixedUpdate()
+    {
+        var hand_rig = m_grab.grabbedBy.GetComponent<Rigidbody>();
+        foreach(var i in objs)
+        {
+            Rigidbody rb = i.Key.GetComponentInChildren<Rigidbody>();
+            rb.AddForce(hand_rig.velocity);
+            Vector3 force = hand_rig.velocity;
+            Debug.LogFormat("{0}, {1}, {2}", force.x, force.y, force.z);
+        }
+    }
     void Update()
     {
         
@@ -41,10 +55,8 @@ public class Container : MonoBehaviour
         else
             obj.transform.parent = null;
 
-        if(obj.layer == 9) //grab
-        {
-            obj.layer = 0;
-        }
+        obj.layer = 0;
+        obj.GetComponentInChildren<Collider>().gameObject.layer = 0;
 
         objs.Remove(obj);
 

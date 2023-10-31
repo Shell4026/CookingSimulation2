@@ -20,10 +20,13 @@ public class Tutorial : MonoBehaviour
     {
         if(first_grab)
         {
-            if (hands[0].grabbedObject != null || hands[1].grabbedObject != null)
+            if (manager.GetLevel() == 3)
             {
-                manager.LevelStart(4);
-                first_grab = false;
+                if (hands[0].grabbedObject != null || hands[1].grabbedObject != null)
+                {
+                    manager.LevelStart(4);
+                    first_grab = false;
+                }
             }
         }
         if (first_grab_egg)

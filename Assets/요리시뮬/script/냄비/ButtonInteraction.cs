@@ -17,6 +17,7 @@ public class ButtonInteraction : MonoBehaviour
     Renderer induction_renderer;
 
     bool first = true;
+    bool wait = false;
 
     private void Start()
     {
@@ -27,6 +28,9 @@ public class ButtonInteraction : MonoBehaviour
 
     public void PressButton()
     {
+        if (wait == false)
+            return;
+
         isButtonPressed = !isButtonPressed;
 
         if (isButtonPressed)
@@ -38,12 +42,19 @@ public class ButtonInteraction : MonoBehaviour
             }
             anim.SetBool("press", true);
             induction_renderer.material.color = Color.red;
+            wait = true;
+            Invoke(nameof(Wait), 1.0f);
         }
         else if (!isButtonPressed)
         {
             anim.SetBool("press", false);
             induction_renderer.material.color = originalColor;
         }
+    }
+
+    void Wait()
+    {
+        wait = false;
     }
 
     public void SetPress(bool p)

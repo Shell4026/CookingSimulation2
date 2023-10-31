@@ -16,6 +16,7 @@ public class Cookingpreparation : MonoBehaviour
     [SerializeField] private Message sub_end;
     [SerializeField] private Message sub_retry;
     [SerializeField] private Message sub_good;
+    [SerializeField] private Message sub_timer;
     [Header("음성")]
     [SerializeField] private AudioSource audio_start;
     [SerializeField] private AudioSource audio_materials;
@@ -34,23 +35,30 @@ public class Cookingpreparation : MonoBehaviour
     [SerializeField] private Message sub_tutorial8; // 재료들을 넣자
     [SerializeField] private Message sub_tutorial9; // 계란 팁
     [SerializeField] private Message sub_tutorial10; // 재료를 다 넣은 후
-    [SerializeField] private Message sub_tutorial11; // 빨간 버튼 누름
+    [SerializeField] private Message sub_tutorial11; // 빨간 버튼 누름, 
+    [SerializeField] private Message sub_tutorial12; // 타이머 안내
+    [SerializeField] private Message sub_tutorial13; // 라면이 탐
+    [SerializeField] private Message sub_tutorial14; // 라면이 덜 익음
+    [SerializeField] private Message sub_tutorial15; // 라면 평가 ㄱㄱ
     [Space(10.0f)]
-    public float LimitTime;
-    public float minTime;
-    public float maxTime;
-    public float ftime;
+    public float LimitTime = 30;
+    public float minTime = 15;
+    public float maxTime = 22;
 
-    public bool ingredients = false; //식재료
+    float timer = 30.0f;
+
     private bool finsh = false;
     private bool table = false;
 
     int level = 0;
 
     bool water_check = false;
+    bool all_ok = false;
+    bool start_timer = false;
 
     void Start()
     {
+        timer = LimitTime;
         Invoke(nameof(GameStart), 1.0f); //1초뒤 첫 시작
     }
 
@@ -80,6 +88,11 @@ public class Cookingpreparation : MonoBehaviour
         sub_tutorial8.gameObject.SetActive(false);
         sub_tutorial9.gameObject.SetActive(false);
         sub_tutorial10.gameObject.SetActive(false);
+        sub_tutorial11.gameObject.SetActive(false);
+        sub_tutorial12.gameObject.SetActive(false);
+        sub_tutorial13.gameObject.SetActive(false);
+        sub_tutorial14.gameObject.SetActive(false);
+        sub_tutorial15.gameObject.SetActive(false);
     }
 
     public int GetLevel()
@@ -129,20 +142,48 @@ public class Cookingpreparation : MonoBehaviour
                 break;
             case 9: //잘했고 재료 넣어 임마
                 OffSubtitles();
-                audio_good.Play();
+                audio_fire.Play();
                 sub_tutorial8.gameObject.SetActive(true);
                 break;
             case 10: //계란 부수는 팁
                 OffSubtitles();
                 sub_tutorial9.gameObject.SetActive(true);
                 break;
-            case 11: //재료를 다 넣은 후
+            case 11: //재료를 다 넣은 후 - pot-watercollider에서 호출
                 OffSubtitles();
                 sub_tutorial10.gameObject.SetActive(true);
                 break;
             case 12: //빨간 버튼 누름
                 OffSubtitles();
                 sub_tutorial11.gameObject.SetActive(true);
+                break;
+            case 13: //타이머 안내, 저장 부분
+                OffSubtitles();
+                sub_tutorial12.gameObject.SetActive(true);
+                StartCoroutine(LevelStartDelay(14, 5.0f));
+                saveload.SaveGame();
+                break;
+            case 14://최종 조리 단계
+                OffSubtitles();
+                sub_timer.gameObject.SetActive(true);
+                start_timer = true;
+                break;
+            case 15: //탔음
+                OffSubtitles();
+                sub_tutorial13.gameObject.SetActive(true);
+                saveload.LoadGame();
+                LevelStart(13);
+                break;
+            case 16: //덜익음
+                OffSubtitles();
+                sub_tutorial14.gameObject.SetActive(true);
+                saveload.LoadGame();
+                LevelStart(13);
+                break;
+            case 17: //라면평가 ㄱㄱ!
+                OffSubtitles();
+                audio_good.Play();
+                sub_tutorial15.gameObject.SetActive(true);
                 break;
         }
     }
@@ -156,6 +197,44 @@ public class Cookingpreparation : MonoBehaviour
             {
                 LevelStart(7);
                 water_check = true;
+            }
+        }
+        if (!all_ok)
+        {
+            if (inductionButton.IsPress() && level >= 11 && potInteraction.isPotOnInduction)
+            {
+                all_ok = true;
+                LevelStart(13);
+            }
+        }
+        if(start_timer)
+        {
+            if (!inductionButton.IsPress())
+            {
+                start_timer = false;
+            }
+            else
+            {
+                sub_timer.textpro.text = timer.ToString();
+                timer -= Time.deltaTime;
+            }
+            if (timer <= minTime)
+            {
+                timer = maxTime;
+                start_timer = false;
+                LevelStart(15);
+            }
+            else if(timer > minTime && timer < maxTime)
+            {
+                timer = maxTime;
+                start_timer = false;
+                LevelStart(17);
+            }
+            else
+            {
+                timer = maxTime;
+                start_timer = false;
+                LevelStart(16);
             }
         }
     }

@@ -44,17 +44,19 @@ public class WaterSound : MonoBehaviour
     public void On()
     {
         if (audios != null)
-            audios = GetComponent<AudioSource>();
-        off = false;
-        audios.time = 0.0f;
-        audios.Play();
+        {
+            off = false;
+            audios.time = 0.0f;
+            audios.Play();
+        }
     }
 
     public void Off()
     {
         if (audios != null)
-            audios = GetComponent<AudioSource>();
-        off = true;
-        audios.time = 96.5f;
+        {
+            off = true;
+            audios.time = 96.5f;
+        }
     }
 }

@@ -21,6 +21,8 @@ public class GameStateLoad : MonoBehaviour
     Quaternion player_rot;
     Quaternion pot_rot;
 
+    float pot_water_amount;
+
     int stage_level = 0;
 
     public void SaveGame()
@@ -57,6 +59,7 @@ public class GameStateLoad : MonoBehaviour
         }
 
         stage_level = manager.GetLevel();
+        pot_water_amount = pot.GetWaterAmount();
     }
     public void LoadGame() 
     {
@@ -71,6 +74,8 @@ public class GameStateLoad : MonoBehaviour
         pot.transform.position = pot_pos;
         pot.transform.rotation = pot_rot;
 
+        pot.SetWaterAmount(pot_water_amount);
+
         for (int i = 0; i < objs.Count; ++i)
         {
             if (objs[i] == null)
@@ -84,6 +89,8 @@ public class GameStateLoad : MonoBehaviour
             objs[i].position = objs_pos[i];
             objs[i].rotation = objs_rot[i];
         }
+
+        buttonInteraction.SetPress(false);
     }
 
 #if UNITY_EDITOR
