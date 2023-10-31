@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a285c96137f95944babad93ec2d9a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
+  distance: 2
   player_cam: {fileID: 0}
   max_speed: 3
   life_time: 3
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a285c96137f95944babad93ec2d9a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
+  distance: 2
   player_cam: {fileID: 0}
   max_speed: 3
   life_time: 3
@@ -769,7 +769,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a285c96137f95944babad93ec2d9a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
+  distance: 2
   player_cam: {fileID: 0}
   max_speed: 3
   life_time: 3
@@ -1110,7 +1110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a285c96137f95944babad93ec2d9a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
+  distance: 2
   player_cam: {fileID: 0}
   max_speed: 3
   life_time: 3
@@ -1440,7 +1440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a285c96137f95944babad93ec2d9a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
+  distance: 2
   player_cam: {fileID: 0}
   max_speed: 3
   life_time: 3
@@ -1561,7 +1561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a285c96137f95944babad93ec2d9a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
+  distance: 2
   player_cam: {fileID: 0}
   max_speed: 3
   life_time: 3
@@ -2047,7 +2047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a285c96137f95944babad93ec2d9a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
+  distance: 2
   player_cam: {fileID: 0}
   max_speed: 3
   life_time: 3
@@ -2779,7 +2779,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7857480274124432326
 Transform:
   m_ObjectHideFlags: 0
@@ -2911,7 +2911,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a285c96137f95944babad93ec2d9a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 1
+  distance: 2
   player_cam: {fileID: 0}
   max_speed: 3
   life_time: 3
