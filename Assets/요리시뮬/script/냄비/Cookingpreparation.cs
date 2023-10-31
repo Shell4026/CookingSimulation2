@@ -25,6 +25,7 @@ public class Cookingpreparation : MonoBehaviour
     [Header("튜토리얼 자막")]
     [SerializeField] private Message sub_tutorial1; // 무빙
     [SerializeField] private Message sub_tutorial2; // 잡기
+    [SerializeField] private Message sub_tutorial3; // 도마로 가라
 
     [Space(10.0f)]
     public float LimitTime;
@@ -55,7 +56,14 @@ public class Cookingpreparation : MonoBehaviour
         LevelStart(lv);
     }
 
-    private void LevelStart(int lv)
+    public void OffSubtitles()
+    {
+        sub_tutorial1.gameObject.SetActive(false);
+        sub_tutorial2.gameObject.SetActive(false);
+        sub_tutorial3.gameObject.SetActive(false);
+    }
+
+    public void LevelStart(int lv)
     {
         switch(lv)
         {
@@ -75,6 +83,8 @@ public class Cookingpreparation : MonoBehaviour
                 sub_tutorial2.gameObject.SetActive(true);
                 break;
             case 4:
+                OffSubtitles();
+                sub_tutorial3.gameObject.SetActive(true);
                 break;
         }
     }
