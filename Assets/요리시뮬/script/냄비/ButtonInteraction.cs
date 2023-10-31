@@ -40,10 +40,8 @@ public class ButtonInteraction : MonoBehaviour
     {
         if (other.gameObject.layer == 7) // 손 레이어
         {
-            Debug.Log(OVRInput.GetDown(OVRInput.Button.One));
             if (OVRInput.GetDown(OVRInput.Button.One))
             {
-                
                 PressButton();
             }
         }
