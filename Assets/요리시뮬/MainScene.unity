@@ -4164,7 +4164,7 @@ GameObject:
   - component: {fileID: 1961139298}
   m_Layer: 0
   m_Name: "\uD50C\uB808\uC774\uC5B4"
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4286,7 +4286,7 @@ Terrain:
   m_GameObject: {fileID: 2096874064}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: b438ef81359152a458fd1a9b7953e326, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
