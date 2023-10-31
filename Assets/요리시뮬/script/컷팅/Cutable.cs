@@ -20,6 +20,7 @@ public class Cutable : MonoBehaviour
     Mesh mesh;
     bool cut_wait = false;
     int count = 0;
+    Container container;
 
     [HideInInspector][SerializeField] public GameObject cut_obj;
     void Start()
@@ -30,6 +31,10 @@ public class Cutable : MonoBehaviour
             mesh = meshFilter.mesh;
     }
 
+    public void SetContainer(Container c)
+    {
+        container = c;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -476,7 +481,10 @@ public class Cutable : MonoBehaviour
         }
         //----------------------------------------------------------------------------------//
         //-----------------메쉬A-------------------//
-        Cutable obj_a = Instantiate(gameObject).GetComponent<Cutable>();
+        Cutable obj_a = Instantiate(gameObject, transform.parent).GetComponent<Cutable>();
+        if (container != null)
+            container.AddObject(obj_a.gameObject);
+
         obj_a.cut_wait = true;
         obj_a.count += 1;
 
@@ -500,30 +508,40 @@ public class Cutable : MonoBehaviour
             obj_a.meshFilter.mesh = new_mesh_a;
         }
         //콜라이더 수정//
-        Vector3 max = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
-        Vector3 min = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
-        for(int i = 1; i < final_verts.Length; i++)
+        if (final_verts.Length > 0)
         {
-            if (max.x < final_verts[i].x)
-                max.x = final_verts[i].x;
-            if (max.y < final_verts[i].y)
-                max.y = final_verts[i].y;
-            if (max.z < final_verts[i].z)
-                max.z = final_verts[i].z;
+            Vector3 max = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
+            Vector3 min = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
+            for (int i = 1; i < final_verts.Length; i++)
+            {
+                if (max.x < final_verts[i].x)
+                    max.x = final_verts[i].x;
+                if (max.y < final_verts[i].y)
+                    max.y = final_verts[i].y;
+                if (max.z < final_verts[i].z)
+                    max.z = final_verts[i].z;
 
-            if (min.x > final_verts[i].x)
-                min.x = final_verts[i].x;
-            if (min.y > final_verts[i].y)
-                min.y = final_verts[i].y;
-            if (min.z > final_verts[i].z)
-                min.z = final_verts[i].z;
+                if (min.x > final_verts[i].x)
+                    min.x = final_verts[i].x;
+                if (min.y > final_verts[i].y)
+                    min.y = final_verts[i].y;
+                if (min.z > final_verts[i].z)
+                    min.z = final_verts[i].z;
+            }
+            Vector3 center = (max + min) / 2.0f;
+            obj_a._collider.center = center;
+            obj_a._collider.size = new Vector3(max.x - min.x, max.y - min.y, max.z - min.z);
         }
-        Vector3 center = (max + min) / 2.0f;
-        obj_a._collider.center = center;
-        obj_a._collider.size = new Vector3(max.x - min.x, max.y - min.y, max.z - min.z);
+        else
+        {
+            obj_a._collider.center = Vector3.zero;
+            obj_a._collider.size = Vector3.zero;
+        }
         //----------------------------------------//
         //-----------------메쉬B-------------------//
-        Cutable obj_b = Instantiate(gameObject).GetComponent<Cutable>();
+        Cutable obj_b = Instantiate(gameObject, transform.parent).GetComponent<Cutable>();
+        if (container != null)
+            container.AddObject(obj_b.gameObject);
         obj_b.transform.Translate(new Vector3(0, 0.05f, 0), Space.World);
         obj_b.cut_wait = true;
         obj_b.count += 1;
@@ -548,30 +566,41 @@ public class Cutable : MonoBehaviour
             obj_b.GetComponent<Cutable>().meshFilter.mesh = new_mesh_b;
         }
         //콜라이더 수정//
-        max = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
-        min = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
-        for (int i = 1; i < final_verts.Length; i++)
+        if(final_verts.Length > 0)
         {
-            if (max.x < final_verts[i].x)
-                max.x = final_verts[i].x;
-            if (max.y < final_verts[i].y)
-                max.y = final_verts[i].y;
-            if (max.z < final_verts[i].z)
-                max.z = final_verts[i].z;
+            Vector3 max = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
+            Vector3 min = new(final_verts[0].x, final_verts[0].y, final_verts[0].z);
+            for (int i = 1; i < final_verts.Length; i++)
+            {
+                if (max.x < final_verts[i].x)
+                    max.x = final_verts[i].x;
+                if (max.y < final_verts[i].y)
+                    max.y = final_verts[i].y;
+                if (max.z < final_verts[i].z)
+                    max.z = final_verts[i].z;
 
-            if (min.x > final_verts[i].x)
-                min.x = final_verts[i].x;
-            if (min.y > final_verts[i].y)
-                min.y = final_verts[i].y;
-            if (min.z > final_verts[i].z)
-                min.z = final_verts[i].z;
+                if (min.x > final_verts[i].x)
+                    min.x = final_verts[i].x;
+                if (min.y > final_verts[i].y)
+                    min.y = final_verts[i].y;
+                if (min.z > final_verts[i].z)
+                    min.z = final_verts[i].z;
+            }
+            Vector3 center = (max + min) / 2.0f;
+            obj_b._collider.center = center;
+            obj_b._collider.size = new Vector3(max.x - min.x, max.y - min.y, max.z - min.z);
         }
-        center = (max + min) / 2.0f;
-        obj_b._collider.center = center;
-        obj_b._collider.size = new Vector3(max.x - min.x, max.y - min.y, max.z - min.z);
+        else
+        {
+            obj_b._collider.center = Vector3.zero;
+            obj_b._collider.size = Vector3.zero;
+        }
+
         //----------------------------------------//
 
-        Destroy(this);
+        if (container != null)
+            container.RemoveObject(gameObject);
+        Destroy(this.gameObject);
     }
 }
 public class Vector3Comparer : IComparer<Vector3>
