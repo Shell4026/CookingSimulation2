@@ -6,14 +6,14 @@ public class Cookingpreparation : MonoBehaviour
 {
     private ButtonInteraction inductionButton;
     private PotInteraction pot;
+    public Water water;
     public GameObject fire;
     public GameObject potObject;
     public float LimitTime;
     public float ftime;
 
-    private bool water = true;
-    private bool ingredients = true; //식재료
-    private bool finsh = true;
+    public bool ingredients = false; //식재료
+    private bool finsh = false;
 
     void Start()
     {
@@ -26,14 +26,11 @@ public class Cookingpreparation : MonoBehaviour
     {
         if (inductionButton.isButtonPressed && pot.isPotOnInduction)
         {
-            if (water != true)
+            if (water.water != true)
             {
-                if (inductionButton.isButtonPressed == true)
-                {
-                    //다시
-                }
+                //다시 UI 버튼으로 GameStateLoad1 스크립트 할당하기
             }
-            else if (water == true)
+            else if (water.water == true)
             {
                 if (ingredients == true) //제 시간 안에 클릭을 했는가?
                 {
@@ -47,14 +44,9 @@ public class Cookingpreparation : MonoBehaviour
                     }
                     else if (LimitTime < 0)
                     {
-                        //no 탔는지 덜익었는지 ui로 띄운 후 재시작
+                        //no 탔는지 덜익었는지 ui로 띄운 후 재시작 UI 버튼으로 GameStateLoad2 스크립트 할당하기
                         LimitTime = 10f;
                         Debug.Log("다시");
-                        water = false;
-                        ingredients = false;
-                        finsh = false;
-                        pot.isPotOnInduction = false;
-                        inductionButton.isButtonPressed = false;
                     }
                 }
             }
@@ -74,6 +66,7 @@ public class Cookingpreparation : MonoBehaviour
             {
                 //불남
                 fire.SetActive(true);
+                //UI 버튼으로 GameStateLoad3 스크립트 할당하기
             }
         }
     }
@@ -84,10 +77,6 @@ public class Cookingpreparation : MonoBehaviour
         {
             ingredients = true;
         }
-        if (collision.gameObject.CompareTag("water"))
-        {
-            water = true;
-        }
     }
 
     private void OnCollisionExit(Collision collision)
@@ -95,10 +84,6 @@ public class Cookingpreparation : MonoBehaviour
         if (collision.gameObject.CompareTag("greenonion") && collision.gameObject.CompareTag("Lamen"))
         {
             ingredients = false;
-        }
-        if (collision.gameObject.CompareTag("water"))
-        {
-            water = false;
         }
     }
 }
