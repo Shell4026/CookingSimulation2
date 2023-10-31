@@ -22,8 +22,7 @@ public class WaterSound : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(audios != null)
-            audios = GetComponent<AudioSource>();
+
         if (!off)
         {
             if (audios.isPlaying)
@@ -44,6 +43,8 @@ public class WaterSound : MonoBehaviour
 
     public void On()
     {
+        if (audios != null)
+            audios = GetComponent<AudioSource>();
         off = false;
         audios.time = 0.0f;
         audios.Play();
@@ -51,6 +52,8 @@ public class WaterSound : MonoBehaviour
 
     public void Off()
     {
+        if (audios != null)
+            audios = GetComponent<AudioSource>();
         off = true;
         audios.time = 96.5f;
     }
