@@ -62,7 +62,7 @@ public class Cookingpreparation : MonoBehaviour
                 break;
             case 1:
                 sub_tutorial1.gameObject.SetActive(true);
-                StartCoroutine(LevelStartDelay(2, 5.0f));
+                StartCoroutine(LevelStartDelay(2, 9.0f));
                 break;
             case 2:
                 sub_materials.gameObject.SetActive(true);
