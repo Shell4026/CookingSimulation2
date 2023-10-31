@@ -14,7 +14,7 @@ public class FollowingUI : MonoBehaviour
     {
         
     }
-    void Update()
+    protected void Update()
     {
         Vector3 goal = player_cam.position + player_cam.forward * distance;
         float goal_dis = (goal - transform.position).magnitude;

@@ -1,0 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Message : FollowingUI
+{
+    [Header("사라지는 시간")]
+    public float life_time = 3.0f;
+    public float fade_time = 1.0f;
+    [Header("렌더러")]
+    public MeshRenderer render;
+    public Text text;
+
+    float time = 0.0f;
+    bool start_fade = false;
+    void Start()
+    {
+        render = GetComponent<MeshRenderer>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        base.Update();
+        if (start_fade)
+            return;
+        if(time >= life_time)
+        {
+            start_fade = true;
+            StartCoroutine("Fade");
+        }
+        else
+            time += Time.deltaTime;
+    }
+    public IEnumerator Fade()
+    {
+        Color c = new();
+        if (render != null)
+            c = render.material.color;
+        if (text != null)
+            c = text.color;
+
+        for (float f = 1f; f >= 0; f -= 0.1f)
+        {
+            if (f < 0.1)
+            {
+                time = 0.0f;
+                start_fade = false;
+                gameObject.SetActive(false);
+                yield return null;
+            }
+            c.a = f;
+            if(render != null)
+                render.material.color = c;
+            if(text != null)
+                text.color = c;
+            yield return new WaitForSeconds((fade_time * 10) * Time.deltaTime);
+        }
+    }
+}
