@@ -14,13 +14,14 @@ public class Message : FollowingUI
 
     float time = 0.0f;
     bool start_fade = false;
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         render = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
         base.Update();
         if (start_fade)

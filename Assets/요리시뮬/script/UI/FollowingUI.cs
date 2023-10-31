@@ -6,15 +6,20 @@ public class FollowingUI : MonoBehaviour
 {
     [Header("플레이어와의 거리")]
     public float distance = 2.0f;
-    [Header("플레이어 카메라")]
+    [Header("플레이어 카메라 - 없을시 메인카메라")]
     public Transform player_cam;
     [Header("따라오는 속도")]
     public float max_speed = 3.0f;
-    private void Start()
+
+    virtual protected void Start()
     {
-        
+        if(player_cam == null)
+        {
+            player_cam = Camera.main.transform;
+            Debug.Log(Camera.main);
+        }
     }
-    protected void Update()
+    virtual protected void Update()
     {
         Vector3 goal = player_cam.position + player_cam.forward * distance;
         float goal_dis = (goal - transform.position).magnitude;
