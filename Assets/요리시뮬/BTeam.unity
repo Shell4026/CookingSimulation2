@@ -5225,7 +5225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 2328718301922309544}
   buttonPressedPosition: {fileID: 709371841}
-  isButtonPressed: 1
+  isButtonPressed: 0
 --- !u!64 &2040658248
 MeshCollider:
   m_ObjectHideFlags: 0
