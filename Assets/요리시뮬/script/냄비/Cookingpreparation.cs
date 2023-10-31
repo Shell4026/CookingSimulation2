@@ -102,7 +102,7 @@ public class Cookingpreparation : MonoBehaviour
             case 3:
                 sub_tutorial2.gameObject.SetActive(true);
                 break;
-            case 4:
+            case 4: //도마로 가세용
                 OffSubtitles();
                 sub_tutorial3.gameObject.SetActive(true);
                 break;
