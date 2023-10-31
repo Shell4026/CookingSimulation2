@@ -42,7 +42,7 @@ public class Message : FollowingUI
         if (text != null)
             c = text.color;
 
-        for (float f = 1f; f >= 0; f -= 0.1f)
+        for (float f = 1f; f >= 0; f -= 0.01f)
         {
             if (f < 0.1)
             {
@@ -56,7 +56,7 @@ public class Message : FollowingUI
                 render.material.color = c;
             if(text != null)
                 text.color = c;
-            yield return new WaitForSeconds((fade_time * 10) * Time.deltaTime);
+            yield return new WaitForSeconds(fade_time / 100.0f);
         }
     }
 }
