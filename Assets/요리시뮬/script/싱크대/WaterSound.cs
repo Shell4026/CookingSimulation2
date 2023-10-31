@@ -22,6 +22,8 @@ public class WaterSound : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(audios != null)
+            audios = GetComponent<AudioSource>();
         if (!off)
         {
             if (audios.isPlaying)
