@@ -8,10 +8,10 @@ public class ButtonInteraction : MonoBehaviour
     [SerializeField] Cookingpreparation manager;
     [SerializeField] GameObject induction;
     [SerializeField] bool isButtonPressed = false;
-    [Header("눌리기 위한 최소 속력")]
-    [SerializeField] float min_speed = 0.3f;
+    [SerializeField] GameObject button;
+    [SerializeField] float push_dis = 0.1f;
 
-    Animator anim;
+    Vector3 original_pos;
 
     Color originalColor;
     Renderer induction_renderer;
@@ -23,14 +23,11 @@ public class ButtonInteraction : MonoBehaviour
     {
         induction_renderer = induction.GetComponent<Renderer>();
         originalColor = induction_renderer.material.color;
-        anim = GetComponent<Animator>();
+        original_pos = button.transform.position;
     }
 
     public void PressButton()
     {
-        if (wait == true)
-            return;
-
         isButtonPressed = !isButtonPressed;
 
         if (isButtonPressed)
@@ -43,21 +40,12 @@ public class ButtonInteraction : MonoBehaviour
                     first = false;
                 }
             }
-            anim.SetBool("press", true);
             induction_renderer.material.color = Color.red;
-            wait = true;
-            Invoke(nameof(Wait), 1.0f);
         }
         else
         {
-            anim.SetBool("press", false);
             induction_renderer.material.color = originalColor;
         }
-    }
-
-    void Wait()
-    {
-        wait = false;
     }
 
     public void SetPress(bool p)
@@ -69,14 +57,23 @@ public class ButtonInteraction : MonoBehaviour
         return isButtonPressed;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void FixedUpdate()
     {
-        if(collision.gameObject.name.Contains("Hand"))
+        float dis = (button.transform.position - original_pos).sqrMagnitude;
+        //Debug.Log((button.transform.position - original_pos).magnitude);
+        if (!wait)
         {
-            if (collision.rigidbody.velocity.magnitude > min_speed)
+            
+            if (dis > push_dis * push_dis)
             {
                 PressButton();
+                wait = true;
             }
+        }
+        else
+        {
+            if (dis < 0.0001f)
+                wait = false;
         }
 
     }

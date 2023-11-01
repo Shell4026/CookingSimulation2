@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Cookingpreparation : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Cookingpreparation : MonoBehaviour
     [SerializeField] private Message sub_retry;
     [SerializeField] private Message sub_good;
     [SerializeField] private Message sub_timer;
+    [SerializeField] private Message sub_true_end;
     [Header("음성")]
     [SerializeField] private AudioSource audio_start;
     [SerializeField] private AudioSource audio_materials;
@@ -43,6 +45,7 @@ public class Cookingpreparation : MonoBehaviour
     [SerializeField] private Message sub_tutorial14; // 라면이 덜 익음
     [SerializeField] private Message sub_tutorial15; // 라면 평가 ㄱㄱ
     [SerializeField] private Message sub_tutorial16; // 라면 평가
+    
     [Space(10.0f)]
     public float LimitTime = 30;
     public float minTime = 15;
@@ -151,6 +154,8 @@ public class Cookingpreparation : MonoBehaviour
                 OffSubtitles();
                 audio_fire.Play();
                 sub_tutorial8.gameObject.SetActive(true);
+                pot.GetComponent<Rigidbody>().isKinematic = true;
+                pot.GetComponent<OVRGrabbable>().enabled = false;
                 break;
             case 10: //계란 부수는 팁
                 OffSubtitles();
@@ -181,6 +186,7 @@ public class Cookingpreparation : MonoBehaviour
                 OffSubtitles();
                 sub_tutorial13.gameObject.SetActive(true);
                 sub_timer.gameObject.SetActive(false);
+                LevelStartDelay(19, 5);
                 //saveload.LoadGame();
                 //LevelStart(13);
                 break;
@@ -188,7 +194,7 @@ public class Cookingpreparation : MonoBehaviour
                 OffSubtitles();
                 sub_tutorial14.gameObject.SetActive(true);
                 sub_timer.gameObject.SetActive(false);
-                //saveload.LoadGame();
+                LevelStartDelay(19, 5);
                 //LevelStart(13);
                 break;
             case 17: //라면평가 ㄱㄱ!
@@ -203,7 +209,11 @@ public class Cookingpreparation : MonoBehaviour
                 sub_tutorial16.gameObject.SetActive(true);
                 final_rating = cook.GetRating();
                 StartCoroutine(nameof(Rate));
-                
+                break;
+            case 19:
+                OffSubtitles();
+                sub_true_end.gameObject.SetActive(true);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 break;
         }
     }
@@ -215,6 +225,7 @@ public class Cookingpreparation : MonoBehaviour
             sub_tutorial16.textpro.text = rate;
             yield return new WaitForSeconds(3.0f);
         }
+        LevelStart(19);
         yield return null;
     }
 

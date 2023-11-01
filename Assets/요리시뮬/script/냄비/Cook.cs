@@ -69,7 +69,7 @@ public class Cook : MonoBehaviour
             onion_cnt++;
             Debug.Log("ÆÄ");
         }
-        if (obj.name.Contains("egg"))
+        if (obj.name.Contains("raw_egg"))
         {
             egg_cnt++;
             Debug.Log("egg");
