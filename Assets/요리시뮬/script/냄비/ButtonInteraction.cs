@@ -46,9 +46,9 @@ public class ButtonInteraction : MonoBehaviour
             anim.SetBool("press", true);
             induction_renderer.material.color = Color.red;
             wait = true;
-            Invoke(nameof(Wait), 1.0f);
+            Invoke(nameof(Wait), 0.5f);
         }
-        else if (!isButtonPressed)
+        else
         {
             anim.SetBool("press", false);
             induction_renderer.material.color = originalColor;
@@ -71,9 +71,13 @@ public class ButtonInteraction : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.rigidbody.velocity.magnitude > min_speed)
+        if(collision.gameObject.name.Contains("Hand"))
         {
-            PressButton();
+            if (collision.rigidbody.velocity.magnitude > min_speed)
+            {
+                PressButton();
+            }
         }
+
     }
 }

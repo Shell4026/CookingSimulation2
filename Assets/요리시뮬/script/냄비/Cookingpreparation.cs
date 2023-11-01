@@ -9,7 +9,7 @@ public class Cookingpreparation : MonoBehaviour
     public PotInteraction potInteraction;
     public ButtonInteraction inductionButton;
     public GameStateLoad saveload;
-    public MeshRenderer waterrender;
+    public SkinnedMeshRenderer waterrender;
 
     [Header("ÀÚ¸·")]
     [SerializeField] private Message sub_start;
@@ -59,6 +59,8 @@ public class Cookingpreparation : MonoBehaviour
     bool all_ok = false;
     bool start_timer = false;
     bool end = false;
+
+    List<string> final_rating = new();
 
     void Start()
     {
@@ -199,6 +201,7 @@ public class Cookingpreparation : MonoBehaviour
             case 18:
                 OffSubtitles();
                 sub_tutorial16.gameObject.SetActive(true);
+                final_rating = cook.GetRating();
                 StartCoroutine(nameof(Rate));
                 
                 break;
@@ -207,7 +210,7 @@ public class Cookingpreparation : MonoBehaviour
 
     IEnumerator Rate()
     {
-        foreach (var rate in cook.GetRating())
+        foreach (var rate in final_rating)
         {
             sub_tutorial16.textpro.text = rate;
             yield return new WaitForSeconds(3.0f);
@@ -237,6 +240,7 @@ public class Cookingpreparation : MonoBehaviour
         if(start_timer)
         {
             sub_timer.textpro.text = timer.ToString();
+            Debug.Log(timer);
             if (!inductionButton.IsPress())
             {
                 start_timer = false;

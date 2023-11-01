@@ -991,10 +991,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pot: {fileID: 8015818994043741879}
-  cook: {fileID: 0}
+  cook: {fileID: 679057425}
   potInteraction: {fileID: 2328718301922309549}
   inductionButton: {fileID: 2040658247}
   saveload: {fileID: 500712030}
+  waterrender: {fileID: 1638917616}
   sub_start: {fileID: 8886701049392342747}
   sub_materials: {fileID: 1097216824}
   sub_fire: {fileID: 0}
@@ -12054,6 +12055,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd425c2d06f39bf4899d07c05d0f10eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!137 &1638917616 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7905304749698146254, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
+  m_PrefabInstance: {fileID: 8015818994043741872}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1660423864
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14006,7 +14012,7 @@ MonoBehaviour:
   manager: {fileID: 128082119}
   induction: {fileID: 2328718301922309544}
   isButtonPressed: 0
-  min_speed: 0.35
+  min_speed: 0.3
 --- !u!65 &2040658248
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27170,7 +27176,7 @@ PrefabInstance:
       objectReference: {fileID: 904997645}
     - target: {fileID: 8015818994043741880, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
       propertyPath: break_force
-      value: 200
+      value: 400
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
