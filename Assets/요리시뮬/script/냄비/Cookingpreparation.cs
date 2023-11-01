@@ -240,7 +240,6 @@ public class Cookingpreparation : MonoBehaviour
             if (!inductionButton.IsPress())
             {
                 start_timer = false;
-                timer = maxTime;
                 end = true;
             }
             else
