@@ -16,7 +16,6 @@ public class FollowingUI : MonoBehaviour
         if(player_cam == null)
         {
             player_cam = Camera.main.transform;
-            Debug.Log(Camera.main);
         }
     }
     virtual protected void Update()

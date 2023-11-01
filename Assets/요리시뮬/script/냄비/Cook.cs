@@ -52,7 +52,7 @@ public class Cook : MonoBehaviour
     {
         if(!send_msg)
         {
-            if(lamen_cnt > 0)
+            if (lamen_cnt > 0)
             {
                 Debug.Log("okkk");
                 manager.LevelStart(11);
@@ -61,50 +61,55 @@ public class Cook : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        GameObject obj = collision.gameObject;
-        if(obj.name.Contains("파"))
+        GameObject obj = other.gameObject;
+        if (obj.name.Contains("파"))
         {
             onion_cnt++;
+            Debug.Log("파");
         }
-        else if(obj.name.Contains("egg"))
+        if (obj.name.Contains("egg"))
         {
             egg_cnt++;
+            Debug.Log("egg");
         }
-        else if (obj.name.Contains("ice"))
+        if (obj.name.Contains("ice"))
         {
             ice_cnt++;
+            Debug.Log("ice");
         }
-        else if (obj.name.Contains("white_egg"))
+        if (obj.name.Contains("white_egg"))
         {
             white_egg_cnt++;
+            Debug.Log("white_egg");
         }
-        else if (obj.name.Contains("라면"))
+        if (obj.name.Contains("라면"))
         {
             lamen_cnt++;
+            Debug.Log("라면");
         }
     }
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        GameObject obj = collision.gameObject;
+        GameObject obj = other.gameObject;
         if (obj.name.Contains("파"))
         {
             onion_cnt--;
         }
-        else if (obj.name.Contains("egg"))
+        if (obj.name.Contains("egg"))
         {
             egg_cnt--;
         }
-        else if (obj.name.Contains("ice"))
+        if (obj.name.Contains("ice"))
         {
             ice_cnt--;
         }
-        else if (obj.name.Contains("white_egg"))
+        if (obj.name.Contains("white_egg"))
         {
             white_egg_cnt--;
         }
-        else if (obj.name.Contains("라면"))
+        if (obj.name.Contains("라면"))
         {
             lamen_cnt--;
         }

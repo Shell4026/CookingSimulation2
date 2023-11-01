@@ -21,6 +21,9 @@ public class Container : MonoBehaviour
         if (rb == null)
             return;
 
+        if (collision.gameObject.GetComponent<Container>() != null)
+            return;
+
         if (rb.velocity.sqrMagnitude < 0.1f)
         {
             Vector3 normal = collision.GetContact(0).normal;

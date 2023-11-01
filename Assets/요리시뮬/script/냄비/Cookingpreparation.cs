@@ -175,17 +175,20 @@ public class Cookingpreparation : MonoBehaviour
             case 15: //ÅÀÀ½
                 OffSubtitles();
                 sub_tutorial13.gameObject.SetActive(true);
+                sub_timer.gameObject.SetActive(false);
                 //saveload.LoadGame();
                 LevelStart(13);
                 break;
             case 16: //´úÀÍÀ½
                 OffSubtitles();
                 sub_tutorial14.gameObject.SetActive(true);
+                sub_timer.gameObject.SetActive(false);
                 //saveload.LoadGame();
                 LevelStart(13);
                 break;
             case 17: //¶ó¸éÆò°¡ ¤¡¤¡!
                 OffSubtitles();
+                sub_timer.gameObject.SetActive(false);
                 audio_good.Play();
                 sub_tutorial15.gameObject.SetActive(true);
                 StartCoroutine(LevelStartDelay(18, 5.0f));
@@ -245,7 +248,7 @@ public class Cookingpreparation : MonoBehaviour
                 start_timer = false;
                 LevelStart(15);
             }
-            else if(timer > minTime && timer < maxTime)
+            else if(timer > minTime && timer <= maxTime)
             {
                 timer = maxTime;
                 start_timer = false;

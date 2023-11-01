@@ -5606,7 +5606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0e6b6bbe8d92964391a90c5a8ab8fb4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.219
+      value: -4.295
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0e6b6bbe8d92964391a90c5a8ab8fb4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5614,7 +5614,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0e6b6bbe8d92964391a90c5a8ab8fb4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.89
+      value: 1.267
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: d0e6b6bbe8d92964391a90c5a8ab8fb4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14006,7 +14006,7 @@ MonoBehaviour:
   manager: {fileID: 128082119}
   induction: {fileID: 2328718301922309544}
   isButtonPressed: 0
-  min_speed: 0.2
+  min_speed: 0.35
 --- !u!65 &2040658248
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14507,7 +14507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5185229248932139840, guid: 3c846c378430907448833e9b92eca00e, type: 3}
       propertyPath: m_Mass
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5185229248932139840, guid: 3c846c378430907448833e9b92eca00e, type: 3}
       propertyPath: m_IsKinematic
@@ -24434,7 +24434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1742414461097895578, guid: 80a5bc5f936072b4a86e2764cfa6bd75, type: 3}
       propertyPath: m_Interpolate
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1742414461097895581, guid: 80a5bc5f936072b4a86e2764cfa6bd75, type: 3}
       propertyPath: hand_pos
@@ -26302,7 +26302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3035845205248866300, guid: b2c1626923f6f0b48b235277aaf8aa52, type: 3}
       propertyPath: m_Interpolate
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3039528523130496586, guid: b2c1626923f6f0b48b235277aaf8aa52, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27140,6 +27140,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: pot
       objectReference: {fileID: 0}
+    - target: {fileID: 6028487177925898031, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
+      propertyPath: m_Mass
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6028487178015984266, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.48001
@@ -27166,7 +27170,7 @@ PrefabInstance:
       objectReference: {fileID: 904997645}
     - target: {fileID: 8015818994043741880, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
       propertyPath: break_force
-      value: 1000
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2ed3f29d24efae4a8749caba17a70ba, type: 3}
