@@ -20,7 +20,6 @@ public class Cutable : MonoBehaviour
     Mesh mesh;
     bool cut_wait = false;
     int count = 0;
-    Container container;
 
     [HideInInspector][SerializeField] public GameObject cut_obj;
     void Start()
@@ -31,10 +30,6 @@ public class Cutable : MonoBehaviour
             mesh = meshFilter.mesh;
     }
 
-    public void SetContainer(Container c)
-    {
-        container = c;
-    }
     // Update is called once per frame
     void Update()
     {
@@ -482,8 +477,6 @@ public class Cutable : MonoBehaviour
         //----------------------------------------------------------------------------------//
         //-----------------메쉬A-------------------//
         Cutable obj_a = Instantiate(gameObject, transform.parent).GetComponent<Cutable>();
-        if (container != null)
-            container.AddObject(obj_a.gameObject);
 
         obj_a.cut_wait = true;
         obj_a.count += 1;
@@ -540,8 +533,6 @@ public class Cutable : MonoBehaviour
         //----------------------------------------//
         //-----------------메쉬B-------------------//
         Cutable obj_b = Instantiate(gameObject, transform.parent).GetComponent<Cutable>();
-        if (container != null)
-            container.AddObject(obj_b.gameObject);
         obj_b.transform.Translate(new Vector3(0, 0.05f, 0), Space.World);
         obj_b.cut_wait = true;
         obj_b.count += 1;
@@ -597,9 +588,6 @@ public class Cutable : MonoBehaviour
         }
 
         //----------------------------------------//
-
-        if (container != null)
-            container.RemoveObject(gameObject);
         Destroy(this.gameObject);
     }
 }

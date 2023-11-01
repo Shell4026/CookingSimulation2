@@ -28,7 +28,7 @@ public class ButtonInteraction : MonoBehaviour
 
     public void PressButton()
     {
-        if (wait == false)
+        if (wait == true)
             return;
 
         isButtonPressed = !isButtonPressed;
@@ -37,8 +37,11 @@ public class ButtonInteraction : MonoBehaviour
         {
             if(first)
             {
-                manager.LevelStart(12);
-                first = false;
+                if (manager.GetLevel() >= 11)
+                {
+                    manager.LevelStart(12);
+                    first = false;
+                }
             }
             anim.SetBool("press", true);
             induction_renderer.material.color = Color.red;
@@ -68,7 +71,7 @@ public class ButtonInteraction : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.rigidbody.velocity.magnitude > min_speed)
+        if (collision.rigidbody.velocity.magnitude > min_speed)
         {
             PressButton();
         }

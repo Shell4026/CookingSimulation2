@@ -43,6 +43,8 @@ public class Cook : MonoBehaviour
         {
             result.Add("달걀은 취향이지만 넣으면 맛있다구?");
         }
+        if (result.Count == 0)
+            result.Add("완벽합니다!!!!");
         return result;
     }
 
@@ -52,6 +54,7 @@ public class Cook : MonoBehaviour
         {
             if(lamen_cnt > 0)
             {
+                Debug.Log("okkk");
                 manager.LevelStart(11);
                 send_msg = true;
             }

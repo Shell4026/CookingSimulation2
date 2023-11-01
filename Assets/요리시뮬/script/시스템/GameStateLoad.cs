@@ -38,8 +38,6 @@ public class GameStateLoad : MonoBehaviour
         pot_pos = pot.transform.position;
         pot_rot = pot.transform.rotation;
 
-        objs_pos.Capacity = transforms.Length;
-        objs_rot.Capacity = transforms.Length;
         foreach (var t in transforms)
         {
             if (t == null)
