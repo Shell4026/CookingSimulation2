@@ -46,7 +46,7 @@ public class ButtonInteraction : MonoBehaviour
             anim.SetBool("press", true);
             induction_renderer.material.color = Color.red;
             wait = true;
-            Invoke(nameof(Wait), 0.5f);
+            Invoke(nameof(Wait), 1.0f);
         }
         else
         {

@@ -14012,7 +14012,7 @@ MonoBehaviour:
   manager: {fileID: 128082119}
   induction: {fileID: 2328718301922309544}
   isButtonPressed: 0
-  min_speed: 0.3
+  min_speed: 0.25
 --- !u!65 &2040658248
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -161,7 +161,7 @@ public class Cookingpreparation : MonoBehaviour
                 OffSubtitles();
                 sub_tutorial10.gameObject.SetActive(true);
                 break;
-            case 12: //빨간 버튼 누름
+            case 12: //처음 빨간 버튼 누름
                 OffSubtitles();
                 sub_tutorial11.gameObject.SetActive(true);
                 break;
@@ -171,7 +171,7 @@ public class Cookingpreparation : MonoBehaviour
                 StartCoroutine(LevelStartDelay(14, 5.0f));
                 //saveload.SaveGame();
                 break;
-            case 14://최종 조리 단계
+            case 14://최종 조리 단계 (타이머)
                 OffSubtitles();
                 sub_timer.gameObject.SetActive(true);
                 waterrender.material.color = new Color(1, 0.45f, 0, 0.745f);
@@ -182,14 +182,14 @@ public class Cookingpreparation : MonoBehaviour
                 sub_tutorial13.gameObject.SetActive(true);
                 sub_timer.gameObject.SetActive(false);
                 //saveload.LoadGame();
-                LevelStart(13);
+                //LevelStart(13);
                 break;
             case 16: //덜익음
                 OffSubtitles();
                 sub_tutorial14.gameObject.SetActive(true);
                 sub_timer.gameObject.SetActive(false);
                 //saveload.LoadGame();
-                LevelStart(13);
+                //LevelStart(13);
                 break;
             case 17: //라면평가 ㄱㄱ!
                 OffSubtitles();
@@ -239,16 +239,19 @@ public class Cookingpreparation : MonoBehaviour
         }
         if(start_timer)
         {
-            sub_timer.textpro.text = timer.ToString();
-            Debug.Log(timer);
-            if (!inductionButton.IsPress())
+            if (end == false)
             {
-                start_timer = false;
-                end = true;
-            }
-            else
-            {
-                timer -= Time.deltaTime;
+                sub_timer.textpro.text = timer.ToString();
+                if (!inductionButton.IsPress())
+                {
+                    inductionButton.gameObject.SetActive(false);
+                    start_timer = false;
+                    end = true;
+                }
+                else
+                {
+                    timer -= Time.deltaTime;
+                }
             }
         }
         if (end)
@@ -265,6 +268,7 @@ public class Cookingpreparation : MonoBehaviour
             {
                 LevelStart(16);
             }
+            end = false;
         }
     }
 }
