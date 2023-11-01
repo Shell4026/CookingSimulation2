@@ -9,6 +9,7 @@ public class Cookingpreparation : MonoBehaviour
     public PotInteraction potInteraction;
     public ButtonInteraction inductionButton;
     public GameStateLoad saveload;
+    public MeshRenderer waterrender;
 
     [Header("자막")]
     [SerializeField] private Message sub_start;
@@ -57,6 +58,7 @@ public class Cookingpreparation : MonoBehaviour
     bool water_check = false;
     bool all_ok = false;
     bool start_timer = false;
+    bool end = false;
 
     void Start()
     {
@@ -170,6 +172,7 @@ public class Cookingpreparation : MonoBehaviour
             case 14://최종 조리 단계
                 OffSubtitles();
                 sub_timer.gameObject.SetActive(true);
+                waterrender.material.color = new Color(1, 0.45f, 0, 0.745f);
                 start_timer = true;
                 break;
             case 15: //탔음
@@ -237,27 +240,26 @@ public class Cookingpreparation : MonoBehaviour
             if (!inductionButton.IsPress())
             {
                 start_timer = false;
+                timer = maxTime;
+                end = true;
             }
             else
             {
                 timer -= Time.deltaTime;
             }
+        }
+        if (end)
+        {
             if (timer <= minTime)
             {
-                timer = maxTime;
-                start_timer = false;
                 LevelStart(15);
             }
-            else if(timer > minTime && timer <= maxTime)
+            else if (timer > minTime && timer <= maxTime)
             {
-                timer = maxTime;
-                start_timer = false;
                 LevelStart(17);
             }
             else
             {
-                timer = maxTime;
-                start_timer = false;
                 LevelStart(16);
             }
         }
