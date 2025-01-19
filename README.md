@@ -1,4 +1,4 @@
-# Cooking-simulation
+# VR 요리 시뮬레이션 프로젝트
  
 요리시뮬레이션 폴더의 Scene에서 작업합니다.
 
